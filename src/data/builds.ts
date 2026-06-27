@@ -19,13 +19,13 @@ export const BUILDS: Build[] = [
     archetypes: ["anti-tunnel", "meta"],
     difficulty: "advanced",
     metaTier: "S",
-    summary: "The competitive answer to tunneling — stacked second chances that make you a nightmare to remove.",
+    summary: "The classic anti-tunnel stack. Come back for me and you'll regret it.",
     whyItWorks:
-      "Each perk covers a different stage of being targeted: Off the Record hides you and eats a hit off-hook, Decisive Strike punishes the grab, Dead Hard extends the chase, and Unbreakable defeats the slug that all of the above invites. Together they force the Killer to commit far more time than tunneling should ever cost.",
+      "Each perk covers a different part of getting targeted. Off the Record hides you and eats a hit after the unhook, Decisive Strike punishes a grab, Dead Hard buys one more loop, and Unbreakable gets you up if they slug you instead. Tunneling you ends up costing the killer way more time than it should.",
     tradeoffs:
-      "Almost entirely reactive — it does nothing until you're hooked or chased, and it leans on a clean Dead Hard. Against a Killer who simply spreads pressure and never tunnels, much of the kit sits idle.",
+      "It's all reactive. None of it does anything until you're on hook or in chase, and a lot of it leans on hitting Dead Hard cleanly. Against a killer who just spreads pressure and never tunnels, half the build sits there doing nothing.",
     bestAgainst:
-      "Aggressive snowball and tunnel-prone Killers — the more they fixate on one Survivor, the harder this punishes them.",
+      "Killers who lock onto one person. The more they tunnel, the harder this punishes them.",
     patch: "10.0.1",
     featured: true,
   },
@@ -38,15 +38,15 @@ export const BUILDS: Build[] = [
     archetypes: ["gen-rush"],
     difficulty: "intermediate",
     metaTier: "A",
-    summary: "Maximum repair speed and skill-check value, with three-gen denial baked in.",
+    summary: "Pump gens out fast and break up three-gens before they form.",
     whyItWorks:
-      "Prove Thyself rewards grouping up, Déjà Vu spreads your repairs to dismantle three-gens, and Hyperfocus plus Stake Out turn every skill check into a chunk of bonus progress. The result is gens that pop noticeably faster than a Killer expects.",
+      "Prove Thyself speeds you up when you group on a gen, Déjà Vu shows you which gens to hit so a three-gen never forms, and Hyperfocus plus Stake Out turn good skill checks into chunks of free progress. Gens go a lot faster than the killer plans for.",
     tradeoffs:
-      "Hyperfocus demands consistent great skill checks — fumble them and you lose most of the build's value. It also offers nothing for the chase, so you rely on teammates to buy you time.",
+      "Hyperfocus only pays off if you actually hit your skill checks, so a shaky hand loses most of the value. And there's nothing here for chase, so you're trusting your team to buy the time.",
     bestAgainst:
-      "Slower, setup-heavy Killers who want a long game — out-pace their slowdown before it comes online.",
+      "Slow, setup-heavy killers who want a long game. Finish the gens before their slowdown even gets going.",
     extras: [
-      { name: "Commodious Toolbox", kind: "item", note: "Amplifies the repair lead even further." },
+      { name: "Commodious Toolbox", kind: "item", note: "Pushes the repair lead even further." },
     ],
     patch: "10.0.1",
     featured: true,
@@ -59,13 +59,13 @@ export const BUILDS: Build[] = [
     archetypes: ["meta", "beginner"],
     difficulty: "beginner",
     metaTier: "A",
-    summary: "Constant aura information that replaces the comms solo players don't have.",
+    summary: "All the info you'd get from comms, without the comms.",
     whyItWorks:
-      "Kindred shows you the whole team (and the Killer) during every hook, Bond keeps tabs on nearby teammates, and Windows teaches you the map's loops while Sprint Burst gets you to them. You always know whether to go for a save, hide, or hit a gen — the core decision in solo queue.",
+      "Kindred shows you the whole team and the killer every time someone's hooked, Bond keeps an eye on nearby teammates, and Windows teaches you the loops while Sprint Burst gets you there. You always know whether to go for the save, hide, or stay on the gen, which is basically the whole game in solo queue.",
     tradeoffs:
-      "It's an information build, not a power build: it makes you smarter, not stronger. You still have to act on what you see.",
+      "It makes you smarter, not stronger. You still have to make the right call with what you're seeing.",
     bestAgainst:
-      "Any Killer, in any solo lobby — this is the build that teaches the game.",
+      "Any killer, any solo lobby. This is the build that teaches you the game.",
     patch: "10.0.1",
     featured: true,
   },
@@ -78,13 +78,13 @@ export const BUILDS: Build[] = [
     archetypes: ["boon", "altruist"],
     difficulty: "intermediate",
     metaTier: "B",
-    summary: "A self-relighting boon totem that heals, hides, and un-slugs the whole team.",
+    summary: "A boon you keep relighting that heals, hides, and picks people up.",
     whyItWorks:
-      "One blessed totem becomes a healing field (Circle of Healing), a stealth zone (Shadow Step), and an anti-slug safety net (Exponential). Sprint Burst lets you dash back to relight it whenever the Killer snuffs it. Place it centrally and the map bends around your sanctuary.",
+      "One blessed totem turns into a heal station (Circle of Healing), a stealth zone (Shadow Step), and an anti-slug net (Exponential) all at once, and Sprint Burst lets you run back to relight it whenever the killer snuffs it. Drop it somewhere central and the map sort of bends around it.",
     tradeoffs:
-      "Blessing eats real time, and a smart Killer will patrol and snuff the totem to bleed you of it. The value is highly dependent on placement and on teammates actually using it.",
+      "Blessing takes real time, and a smart killer will just keep patrolling and snuffing it to drain you. How good it is really comes down to placement and whether your team actually uses it.",
     bestAgainst:
-      "Hit-and-run Killers who rely on leaving you injured — your boon erases their pressure.",
+      "Hit-and-run killers who want to leave you injured. The boon just undoes their pressure.",
     patch: "10.0.1",
   },
   {
@@ -96,13 +96,13 @@ export const BUILDS: Build[] = [
     archetypes: ["stealth"],
     difficulty: "intermediate",
     metaTier: "B",
-    summary: "Disappear mid-chase — no noise, no scratch marks, no trail to follow.",
+    summary: "Vanish in the middle of a chase. No noise, no scratch marks, nothing to follow.",
     whyItWorks:
-      "Iron Will silences your injured grunts, Urban Evasion repositions you unseen, and Quick & Quiet plus Dance With Me let you vault into cover with no sound and no scratch marks, breaking the Killer's line on you entirely. A clean reset every loop.",
+      "Iron Will kills your injured grunts, Urban Evasion moves you around unseen, and Quick & Quiet plus Dance With Me let you dive into cover without a sound or a scratch mark, so the killer just loses you. Clean reset every loop.",
     tradeoffs:
-      "Stealth collapses against tracking powers and aura perks, and Urban Evasion's slow crawl can cost you gen time if you over-use it. Demands patience and good map knowledge.",
+      "Stealth falls apart against tracking powers and aura perks, and crouch-walking everywhere with Urban Evasion costs you gen time if you overdo it. You need patience and to actually know the maps.",
     bestAgainst:
-      "M1 and chase-reliant Killers with no innate tracking — break their line of sight and they're lost.",
+      "M1 killers with no built-in tracking. Break their line of sight and they've got nothing.",
     patch: "10.0.1",
   },
   {
@@ -113,13 +113,13 @@ export const BUILDS: Build[] = [
     archetypes: ["meta"],
     difficulty: "intermediate",
     metaTier: "A",
-    summary: "Value in every phase — chase, gens, and team pressure — with no dead perks.",
+    summary: "Does something useful in every part of the match, with no dead perks.",
     whyItWorks:
-      "Windows and Sprint Burst win you chases, Resilience speeds everything while you're injured (which is most of the match), and Quick Gambit converts your chase time into team gen speed. Nothing in the build ever sits unused.",
+      "Windows and Sprint Burst win you chases, Resilience speeds up everything while you're injured (which is most of the game), and Quick Gambit turns your chase time into gen speed for the team. Nothing in here ever just sits unused.",
     tradeoffs:
-      "It's a jack-of-all-trades — strong everywhere, dominant nowhere. It lacks a hard second chance, so a clean tunnel can still take you out.",
+      "Jack of all trades, master of none. There's no hard second chance, so a committed tunnel can still drag you out.",
     bestAgainst:
-      "Every Killer — this is the dependable default when you don't want to counter-pick.",
+      "Everything. This is the one you bring when you don't feel like counter-picking.",
     patch: "10.0.1",
     featured: true,
   },
@@ -131,13 +131,13 @@ export const BUILDS: Build[] = [
     archetypes: ["endgame"],
     difficulty: "advanced",
     metaTier: "A",
-    summary: "Built to win the final gen and the endgame collapse with a free heal and burst.",
+    summary: "Set up to win the last gen and the gate standoff with a free heal and a sprint.",
     whyItWorks:
-      "Adrenaline banks a full health state and speed boost for the exact moment the last gen pops, Resilience keeps you fast while injured up to that point, and Windows plus Balanced Landing give you the loops to survive until the payoff lands.",
+      "Adrenaline saves a full heal and a speed boost for the exact moment the last gen pops, Resilience keeps you quick while injured before that, and Windows plus Balanced Landing give you the loops to actually make it that far.",
     tradeoffs:
-      "Adrenaline is dead weight for most of the match and whiffs entirely if you're hooked when it triggers. This build gambles on reaching the endgame in the first place.",
+      "Adrenaline does nothing for most of the match and completely whiffs if you're on hook when it goes off. The whole thing is a bet that you'll reach the endgame at all.",
     bestAgainst:
-      "Endgame and NOED-reliant Killers — Adrenaline's burst can carry you straight out the gate.",
+      "Endgame and NOED killers. Adrenaline's burst can carry you right out the gate before they cash in.",
     patch: "10.0.1",
   },
   {
@@ -149,13 +149,13 @@ export const BUILDS: Build[] = [
     archetypes: ["gen-rush"],
     difficulty: "intermediate",
     metaTier: "B",
-    summary: "One toolbox, stretched across the entire match, fuelling a relentless gen lead.",
+    summary: "One toolbox that basically never runs out, fueling a constant gen lead.",
     whyItWorks:
-      "Streetwise slows your toolbox drain, Built to Last refills it whenever it runs dry, and Prove Thyself plus Déjà Vu turn that endless charge into a team-wide repair surge that dismantles three-gens. The toolbox effectively never runs out.",
+      "Streetwise slows the drain, Built to Last refills it when it's empty, and Prove Thyself plus Déjà Vu turn that endless charge into team-wide repair speed that pulls three-gens apart. The toolbox just keeps going.",
     tradeoffs:
-      "Two perks do nothing without an item, so a Franklin's Demise or a lost toolbox guts the build. Like all gen-rush, it gives you no help in a chase.",
+      "Two of these do nothing without an item, so a Franklin's or a dropped toolbox basically deletes the build. And like any gen-rush, it's no help in a chase.",
     bestAgainst:
-      "Three-gen and slowdown Killers who want to grind the match out — you simply out-repair the regression.",
+      "Three-gen and slowdown killers who want to grind it out. You just out-repair the regression.",
     extras: [
       { name: "Commodious Toolbox", kind: "item", note: "Big charge pool to make Built to Last shine." },
       { name: "Wire Spool", kind: "addon", note: "Extra charges stretch the marathon longer." },
@@ -170,13 +170,13 @@ export const BUILDS: Build[] = [
     archetypes: ["meta", "beginner"],
     difficulty: "beginner",
     metaTier: "B",
-    summary: "Heal yourself, loop with confidence, and never wait on a teammate.",
+    summary: "Heal yourself, loop with confidence, and never wait around for a teammate.",
     whyItWorks:
-      "Inner Strength turns totem cleansing into free self-heals from a locker, Resilience rewards the time you spend injured, and Windows plus Sprint Burst keep you alive in chase. You stay productive without ever needing someone to come find you.",
+      "Inner Strength turns cleansing a totem into a free locker heal, Resilience makes the time you spend injured count for something, and Windows plus Sprint Burst keep you alive in chase. You stay useful without needing anyone to come find you.",
     tradeoffs:
-      "Inner Strength needs totems to spend, and a locker heal can be interrupted if the Killer is close. It trades raw power for independence.",
+      "Inner Strength needs totems to spend, and a locker heal gets interrupted if the killer's close. You're trading raw power for not depending on anyone.",
     bestAgainst:
-      "Hit-and-run Killers — self-healing denies the pressure they're built around.",
+      "Hit-and-run killers. Healing yourself takes away the whole thing they're built around.",
     patch: "10.0.1",
   },
   {
@@ -187,13 +187,13 @@ export const BUILDS: Build[] = [
     archetypes: ["meta", "anti-tunnel"],
     difficulty: "advanced",
     metaTier: "A",
-    summary: "Maximize time-in-chase: every hit dodged, every loop known, every off-hook protected.",
+    summary: "Built to eat killer time: dodge the hit, know the loop, stay safe off hook.",
     whyItWorks:
-      "Windows feeds you loops, Resilience speeds your vaults while injured, Dead Hard dodges the hit that would end the chase, and Off the Record keeps you safe and quiet after a hook. A chase specialist's toolkit for eating Killer time.",
+      "Windows hands you the loops, Resilience speeds your vaults while injured, Dead Hard dodges the hit that would end the chase, and Off the Record keeps you safe and quiet after a hook. It's a chase main's toolkit for wasting the killer's whole match.",
     tradeoffs:
-      "Heavily skill-dependent — a wasted Dead Hard collapses the build's ceiling. It offers nothing for gens, so your team has to convert the time you buy.",
+      "Really skill-dependent. Waste your Dead Hard and the ceiling drops out. It also does nothing for gens, so your team has to convert the time you're buying.",
     bestAgainst:
-      "Chase-reliant M1 Killers — drag every chase out and the gens take care of themselves.",
+      "M1 chase killers. Stretch every chase out and the gens take care of themselves.",
     patch: "10.0.1",
   },
   {
@@ -204,13 +204,13 @@ export const BUILDS: Build[] = [
     archetypes: ["altruist", "anti-tunnel"],
     difficulty: "intermediate",
     metaTier: "B",
-    summary: "The dedicated rescuer — safe saves, protected survivors, and full hook awareness.",
+    summary: "The dedicated rescuer: safe saves, protected teammates, eyes on every hook.",
     whyItWorks:
-      "Kindred reads every hook so you know when a save is safe, Borrowed Time protects the person you unhook, Off the Record protects you for the rescue, and Windows gives you the loop to run the Killer off afterward. Purpose-built for the hook game.",
+      "Kindred tells you when a save is actually safe, Borrowed Time protects whoever you unhook, Off the Record keeps you safe going in for it, and Windows gives you a loop to run the killer off afterward. The whole thing is built around the hook game.",
     tradeoffs:
-      "It invests heavily in altruism and little in your own gens or solo escape, so a passive team can leave its value stranded. Borrowed Time is situational on top of base-kit protection.",
+      "It pours everything into saving people and almost nothing into your own gens or escape, so a passive team leaves it stranded. Borrowed Time is also pretty situational on top of the base-kit protection.",
     bestAgainst:
-      "Camping and tunneling Killers — you turn their hook pressure into failed trades.",
+      "Campers and tunnelers. You turn their hook pressure into a string of failed trades.",
     patch: "10.0.1",
   },
   {
@@ -222,13 +222,13 @@ export const BUILDS: Build[] = [
     archetypes: ["gen-rush", "endgame"],
     difficulty: "intermediate",
     metaTier: "B",
-    summary: "Rush the gens out, then cash Adrenaline the instant the lights go green.",
+    summary: "Blast the gens out, then cash Adrenaline the second the lights go green.",
     whyItWorks:
-      "Prove Thyself and Déjà Vu push the gens fast, and because you're the one finishing them, Adrenaline's heal-and-sprint fires right when you need an escape. Sprint Burst covers the gaps in between. The whole build is pointed at a fast, clean finish.",
+      "Prove Thyself and Déjà Vu push gens fast, and since you're usually the one finishing the last one, Adrenaline's heal-and-sprint fires right when you want to leave. Sprint Burst fills the gaps. The whole build points at a quick, clean exit.",
     tradeoffs:
-      "If the team stalls and gens drag, Adrenaline arrives late or not at all, and two perks lean on teammates repairing alongside you.",
+      "If the team stalls and gens drag, Adrenaline shows up late or not at all, and a couple of these perks want teammates repairing next to you.",
     bestAgainst:
-      "Killers who bank on a slow grind — you end the match before their late game exists.",
+      "Killers banking on a slow grind. You're out before their late game ever happens.",
     patch: "10.0.1",
   },
 
@@ -241,13 +241,13 @@ export const BUILDS: Build[] = [
     archetypes: ["slowdown"],
     difficulty: "intermediate",
     metaTier: "S",
-    summary: "The reliable 2026 backbone — layered gen regression that never depends on luck.",
+    summary: "The dependable slowdown stack. No hexes, no luck, just gens that won't get done.",
     whyItWorks:
-      "Corrupt buys the opening, Deadlock blocks a gen on every completion, Pain Resonance blows up the most-progressed gen on a hook, and Pop punishes a kicked gen right after. Each effect triggers at a different moment, so the slowdown is constant rather than spiky — and none of it can be cleansed.",
+      "Corrupt buys you the opening, Deadlock blocks a gen every time one pops, Pain Resonance blows up the most-finished gen on a hook, and Pop punishes a kicked gen right after. They all fire at different moments, so the slowdown is steady instead of spiky, and none of it can be cleansed.",
     tradeoffs:
-      "It offers zero help in the chase. If you can't reliably get downs and hooks, the regression never gets fed and the build does nothing. It rewards strong fundamentals, not raw power.",
+      "Zero help in chase. If you can't get downs and hooks, nothing feeds the regression and the build does nothing. It rewards good fundamentals, not raw power.",
     bestAgainst:
-      "Coordinated gen-rush teams — the steady, un-cleansable drip outlasts their burst of repair speed.",
+      "Coordinated gen-rush teams. The steady drip you can't cleanse outlasts their burst of repair speed.",
     patch: "10.0.1",
     featured: true,
   },
@@ -260,13 +260,13 @@ export const BUILDS: Build[] = [
     archetypes: ["info"],
     difficulty: "intermediate",
     metaTier: "A",
-    summary: "Convert sightlines into hooks — you always know where the next chase is.",
+    summary: "Turn line of sight into hooks. You always know where the next chase is.",
     whyItWorks:
-      "Lethal Pursuer opens the match knowing every position (and boosts the rest), BBQ points you to the next target on each hook, Nowhere to Hide flushes hiders off your gen kicks, and Darkness Revealed pulses the map at lockers. You never waste a second searching, which on a map-control Killer becomes relentless pressure.",
+      "Lethal Pursuer opens the match showing you everyone (and boosts your other aura perks), BBQ points you at the next target on every hook, Nowhere to Hide flushes out hiders when you kick, and Darkness Revealed pulses the whole map off a locker. You basically never waste time looking for people, and on a map-control killer that's brutal.",
     tradeoffs:
-      "Pure information with no slowdown — if you can't close chases quickly, the gens still fly while you stare at auras. It rewards efficient downs, not lengthy hunts.",
+      "It's all info and no slowdown, so if you can't close chases fast the gens still fly while you stare at auras. It rewards quick downs, not long hunts.",
     bestAgainst:
-      "Stealthy, scattered teams that rely on hiding — you simply never lose track of them.",
+      "Stealthy teams that scatter and hide. You just never lose them.",
     patch: "10.0.1",
     featured: true,
   },
@@ -278,13 +278,13 @@ export const BUILDS: Build[] = [
     archetypes: ["hex"],
     difficulty: "advanced",
     metaTier: "B",
-    summary: "A high-variance totem engine — terrifying if it holds, dead if it doesn't.",
+    summary: "A totem engine that's terrifying if it survives and dead if it doesn't.",
     whyItWorks:
-      "Undying protects Ruin's free regression and Devour's snowball, and once totems start falling, Pentimento rekindles them into stacking penalties. When the totems survive the early game, the pressure compounds into a near-unwinnable match for Survivors.",
+      "Undying protects Ruin's free regression and Devour's snowball, and once totems start dropping, Pentimento relights them into stacking penalties. If the totems make it past the early game, the pressure snowballs into a match survivors can't really win.",
     tradeoffs:
-      "Brutally luck-dependent on totem spawns. A team that cleanses efficiently in the first minutes can gut the entire build before it ever comes online. High ceiling, low floor.",
+      "Totally at the mercy of totem spawns. A team that cleanses fast in the first few minutes can gut the whole thing before it gets going. Huge ceiling, very low floor.",
     bestAgainst:
-      "Teams that ignore totems and rush gens — they hand you a free, compounding snowball.",
+      "Teams that ignore totems and rush gens. They're handing you a free snowball.",
     patch: "10.0.1",
   },
   {
@@ -295,13 +295,13 @@ export const BUILDS: Build[] = [
     archetypes: ["anti-heal", "slowdown"],
     difficulty: "intermediate",
     metaTier: "A",
-    summary: "Stretch every heal and punish every gen cluster — death by a thousand cuts.",
+    summary: "Stretch out every heal and punish every gen cluster. Death by a thousand cuts.",
     whyItWorks:
-      "Sloppy drags out healing so injured Survivors stay off gens longer, Nowhere to Hide finds them when you kick, and Pain Resonance plus Dead Man's Switch turn every hook into both regression and a wave of blocked gens. The result is a team perpetually stuck mending instead of repairing.",
+      "Sloppy drags healing out so injured survivors stay off gens, Nowhere to Hide finds them when you kick, and Pain Resonance plus Dead Man's Switch turn every hook into both regression and a wave of blocked gens. The team ends up stuck mending instead of repairing.",
     tradeoffs:
-      "It wants you injuring lots of people rather than committing to long chases, so it's weaker on Killers who can't spread hits. Dead Man's Switch value is streaky.",
+      "It wants you spreading injures around, not committing to long chases, so it's weaker on killers who can't get hits quickly. Dead Man's Switch is also pretty streaky.",
     bestAgainst:
-      "Heal-heavy and medkit-stacking teams — you make their healing economy collapse.",
+      "Heal-heavy, medkit-stacking teams. You make their whole healing economy fall apart.",
     patch: "10.0.1",
     featured: true,
   },
@@ -313,13 +313,13 @@ export const BUILDS: Build[] = [
     archetypes: ["scourge-hook", "slowdown"],
     difficulty: "intermediate",
     metaTier: "A",
-    summary: "Front-loaded slowdown that snowballs harder with every fresh hook.",
+    summary: "Front-loaded slowdown that gets nastier with every fresh hook.",
     whyItWorks:
-      "Grim Embrace rewards hooking different Survivors with global gen blocks (and obsession info), Pain Resonance and Pop chunk progress on every hook and kick, and Deadlock cleans up on each completion. Spreading hooks isn't just safe — it actively powers the build.",
+      "Grim Embrace pays you for hooking different survivors with global gen blocks and obsession info, Pain Resonance and Pop chunk progress on every hook and kick, and Deadlock mops up on completions. Spreading hooks isn't just the safe play here, it's what powers the build.",
     tradeoffs:
-      "Leaning on hooking four different Survivors means a tunnel-heavy game underfeeds Grim Embrace. Like all slowdown, it gives nothing in chase.",
+      "Since it wants four different hooks, a tunnel-heavy game underfeeds Grim Embrace. And like all slowdown, it does nothing in chase.",
     bestAgainst:
-      "Altruistic teams that crowd the hook — every rescue feeds your snowball.",
+      "Altruistic teams that pile on the hook. Every rescue feeds the snowball.",
     patch: "10.0.1",
   },
   {
@@ -330,13 +330,13 @@ export const BUILDS: Build[] = [
     archetypes: ["endgame"],
     difficulty: "intermediate",
     metaTier: "B",
-    summary: "Stall to the gates, then slam the door — a lethal endgame trap.",
+    summary: "Stall it out to the gates, then slam the door.",
     whyItWorks:
-      "Pop and Deadlock drag the match toward the gates, then No Way Out blocks the exit controls while NOED gives you haste and one-hit downs for a brutal endgame swing. The longer the game runs, the deadlier you become.",
+      "Pop and Deadlock drag the game toward the gates, then No Way Out blocks the exit switches while NOED hands you haste and one-shots for a nasty endgame swing. The longer it goes, the scarier you get.",
     tradeoffs:
-      "Honest warning: NOED is a hex and depends on a totem surviving — a thorough team cleanses it away and the finisher never fires. The build is a gamble on the endgame existing at all.",
+      "Worth being honest: NOED is a hex and needs a totem to survive, so a team that does their totems just deletes your finisher. The whole build bets on the endgame actually happening.",
     bestAgainst:
-      "Teams that don't do totems and over-commit to the exit gates — you punish both.",
+      "Teams that skip totems and crowd the exit gates. You punish both.",
     patch: "10.0.1",
   },
   {
@@ -348,13 +348,13 @@ export const BUILDS: Build[] = [
     archetypes: ["chase"],
     difficulty: "advanced",
     metaTier: "B",
-    summary: "Give a weak-power Killer the chase tools to win loops — and keep gen pressure.",
+    summary: "Give a weak-power killer the tools to win loops and still hold gen pressure.",
     whyItWorks:
-      "Bamboozle shuts down the windows that wreck M1 Killers, Coup de Grâce converts completed gens into surprise lunge downs, and Pain Resonance plus Pop keep the regression going so winning chases actually matters. It papers over the exact weakness low-mobility Killers share.",
+      "Bamboozle shuts the windows that wreck M1 killers, Coup de Grâce turns finished gens into surprise lunge downs, and Pain Resonance plus Pop keep regression going so winning chases actually means something. It patches the exact weakness low-mobility killers all share.",
     tradeoffs:
-      "Two perks are pure chase with no slowdown of their own, so a slow chase still loses the gen race. Coup tokens come from gens being done — which is the thing you're trying to prevent.",
+      "Two perks are pure chase with no slowdown of their own, so a slow chase still loses the gen race. And Coup gets its tokens from gens being done, which is the thing you're trying to stop.",
     bestAgainst:
-      "Strong looping teams on pallet-dense maps — you finally close the loops they rely on.",
+      "Strong looping teams on pallet-heavy maps. You finally get to close the loops they live on.",
     patch: "10.0.1",
   },
   {
@@ -366,13 +366,13 @@ export const BUILDS: Build[] = [
     archetypes: ["stealth-killer"],
     difficulty: "advanced",
     metaTier: "B",
-    summary: "Strip away your terror radius and ambush from total silence.",
+    summary: "Drop your terror radius and come out of nowhere.",
     whyItWorks:
-      "Monitor shrinks your heartbeat for the approach, Tinkerer and Trail of Torment make you undetectable at the worst moments for Survivors, and Dark Devotion throws a phantom terror radius onto your obsession to mask where you really are. Nobody hears you coming.",
+      "Monitor shrinks your heartbeat on the approach, Tinkerer and Trail of Torment make you undetectable at the worst possible moments for survivors, and Dark Devotion slaps a fake terror radius onto your obsession so nobody knows where you actually are. They don't hear you coming.",
     tradeoffs:
-      "It's a finesse build with little slowdown and no chase help — if a Survivor spots you anyway, you have only your raw power to fall back on. Dark Devotion's value swings on obsession play.",
+      "It's a finesse build with barely any slowdown and no chase help, so if someone spots you anyway it's just you and your power. Dark Devotion also swings a lot on obsession play.",
     bestAgainst:
-      "Gen-focused teams with their heads down — the surprise hit is devastating against tunnel vision.",
+      "Heads-down gen teams. The surprise hit hurts most against people with tunnel vision.",
     patch: "10.0.1",
     featured: true,
   },
@@ -385,13 +385,13 @@ export const BUILDS: Build[] = [
     archetypes: ["snowball", "fun-meme"],
     difficulty: "advanced",
     metaTier: "B",
-    summary: "Carry one Survivor and expose the whole rescue party for a chaotic snowball.",
+    summary: "Pick someone up, expose the whole rescue party, and watch it spiral.",
     whyItWorks:
-      "On a big-terror, mobile Killer, Starstruck Exposes everyone near you while you carry, turning a crowd of would-be rescuers into free downs. Pain Resonance and Pop keep gens in check between snowballs, and Bamboozle keeps the chase moving. When it pops off, it really pops off.",
+      "On a big-terror, mobile killer, Starstruck exposes everyone near you while you're carrying, so a crowd of would-be rescuers turns into free downs. Pain Resonance and Pop keep gens honest between snowballs, and Bamboozle keeps the chase moving. When it goes off, it really goes off.",
     tradeoffs:
-      "A meme-leaning build that lives or dies on big multi-Survivor moments; disciplined teams that spread out and don't swarm the hook starve it completely.",
+      "It's a bit of a meme and it lives or dies on big group moments, so a disciplined team that spreads out and doesn't swarm the hook starves it completely.",
     bestAgainst:
-      "Altruistic, hook-rushing teams — they walk straight into the Exposed radius.",
+      "Altruistic teams that rush the hook. They walk right into the exposed radius.",
     patch: "10.0.1",
   },
   {
@@ -402,13 +402,13 @@ export const BUILDS: Build[] = [
     archetypes: ["slowdown", "beginner"],
     difficulty: "beginner",
     metaTier: "B",
-    summary: "Forgiving, automatic value while you learn — three of these do their work for you.",
+    summary: "Forgiving, hands-off value while you're still learning. Three of these do the work for you.",
     whyItWorks:
-      "Corrupt and Deadlock create time without you doing anything special, Sloppy stretches every heal, and Pop teaches the fundamental habit of kicking a gen after a hook. It buys a new Killer the breathing room to focus on chases.",
+      "Corrupt and Deadlock make time without you doing anything special, Sloppy stretches every heal, and Pop builds the habit of kicking a gen after a hook. It gives a newer killer the breathing room to just focus on chases.",
     tradeoffs:
-      "Lower ceiling than the meta slowdown stack — it lacks Pain Resonance's punch. It's a teaching build you'll graduate from, not an endgame answer.",
+      "Lower ceiling than the real meta stack since there's no Pain Resonance. It's a build you learn on and then move past, not an endgame answer.",
     bestAgainst:
-      "Anyone, while you're still learning the ropes — the value comes automatically.",
+      "Honestly, anyone, while you're learning the ropes. The value mostly happens on its own.",
     patch: "10.0.1",
   },
   {
@@ -419,13 +419,13 @@ export const BUILDS: Build[] = [
     archetypes: ["slowdown", "endgame"],
     difficulty: "intermediate",
     metaTier: "B",
-    summary: "Block gens instead of regressing them — Survivors can't repair what they can't touch.",
+    summary: "Don't regress gens, just don't let them be touched.",
     whyItWorks:
-      "This stack wins by denial rather than regression: Grim Embrace and Deadlock block gens on hooks and completions, Dead Man's Switch locks gens Survivors abandon, and No Way Out seals the exits at the end. Survivors spend the match staring at gens they aren't allowed to work.",
+      "This one wins by denial instead of regression. Grim Embrace and Deadlock block gens on hooks and completions, Dead Man's Switch locks any gen survivors bail off, and No Way Out seals the exits at the end. They spend the whole match staring at gens they're not allowed to work.",
     tradeoffs:
-      "Blocking only delays — it doesn't erase progress like Pain Resonance does. A team that simply waits out each block and re-taps loses very little. Timing-dependent.",
+      "Blocking only delays, it doesn't erase progress the way Pain Resonance does. A team that just waits each block out and re-taps barely loses anything. Very timing-dependent.",
     bestAgainst:
-      "Twitchy teams that bail off gens the moment you approach — Dead Man's Switch punishes the reflex.",
+      "Twitchy teams that jump off a gen the second you walk up. Dead Man's Switch punishes exactly that reflex.",
     patch: "10.0.1",
   },
   {
@@ -437,13 +437,13 @@ export const BUILDS: Build[] = [
     archetypes: ["stealth-killer", "slowdown"],
     difficulty: "advanced",
     metaTier: "B",
-    summary: "Undetectable approaches plus real regression — sneak in, hook, and chunk a gen.",
+    summary: "Undetectable approaches with actual regression. Sneak in, hook, chunk a gen.",
     whyItWorks:
-      "Tinkerer warns you the instant a gen is nearly done and hides your approach, Monitor shrinks your heartbeat for the sneak, Trail of Torment lets you peel off a gen unseen, and Pain Resonance converts the resulting hook into hard regression. Stealth that actually slows the game, not just startles.",
+      "Tinkerer warns you the moment a gen's almost done and hides your approach, Monitor shrinks your heartbeat for the sneak, Trail of Torment lets you slip off a gen unseen, and Pain Resonance turns the hook you get into hard regression. It's stealth that actually slows the game down instead of just startling people.",
     tradeoffs:
-      "Only one true slowdown perk, so it leans on your power to convert the surprise into a down. Against Survivors who hold gens to the last second, Tinkerer's warning can come too late.",
+      "Only one real slowdown perk, so it leans on your power to turn the surprise into a down. Against survivors who sit on gens to the last second, Tinkerer's warning can come a beat too late.",
     bestAgainst:
-      "Confident teams that commit hard to gens — the undetectable hit catches them mid-repair.",
+      "Confident teams that commit hard to gens. The undetectable hit catches them mid-repair.",
     patch: "10.0.1",
   },
 ];
