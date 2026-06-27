@@ -4,6 +4,9 @@
   "private": true,
   "description": "The Fog Codex — an unofficial fan-made Dead by Daylight builds & perk knowledgebase.",
   "scripts": {
+    "postinstall": "node scripts/gen-art-manifest.mjs",
+    "predev": "node scripts/gen-art-manifest.mjs",
+    "prebuild": "node scripts/gen-art-manifest.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

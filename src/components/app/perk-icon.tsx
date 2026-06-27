@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { Role } from "@/types";
 import { hueFromString, initialsFromName } from "@/lib/placeholders";
+import { PERK_ART } from "@/data/art-manifest";
 import { cn } from "@/lib/utils";
 
 interface PerkIconProps {
@@ -16,10 +17,11 @@ interface PerkIconProps {
  * placeholder. If `icon` is set, the real asset is shown instead.
  */
 export function PerkIcon({ name, slug, role, icon, className }: PerkIconProps) {
-  if (icon) {
+  const src = icon ?? PERK_ART[slug];
+  if (src) {
     return (
       <Image
-        src={icon}
+        src={src}
         alt={name}
         fill
         sizes="80px"

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { Role } from "@/types";
 import { hueFromString, initialsFromName } from "@/lib/placeholders";
+import { CHARACTER_ART } from "@/data/art-manifest";
 import { cn } from "@/lib/utils";
 
 interface CharacterPortraitProps {
@@ -22,11 +23,12 @@ export function CharacterPortrait({
   rounded = "full",
 }: CharacterPortraitProps) {
   const radius = rounded === "full" ? "rounded-full" : "rounded-xl";
+  const src = portrait ?? CHARACTER_ART[slug];
 
-  if (portrait) {
+  if (src) {
     return (
       <span className={cn("relative block overflow-hidden", radius, className)}>
-        <Image src={portrait} alt={name} fill sizes="96px" className="object-cover" />
+        <Image src={src} alt={name} fill sizes="96px" className="object-cover" />
       </span>
     );
   }
