@@ -21,10 +21,11 @@ A polished, fast, dark-themed **Dead by Daylight builds & perk knowledgebase** w
 
 **Community layer (database + auth):**
 
-- **Sign in with GitHub or Google** (Auth.js / NextAuth v5).
+- **Accounts** via GitHub/Google OAuth **or** email + password (Auth.js / NextAuth v5, JWT sessions).
 - **Publish your own builds** from the sandbox to `/community`.
 - **Star ratings** (1–5) and **threaded comments** on community builds.
 - **Profile** (`/profile`) listing everything you've shared; delete your own builds and comments.
+- **Staff panel** (`/staff`) with roles (user / moderator / admin): manage users, change roles, ban/unban, and remove any build, comment, or account. Banned users can't post.
 
 ## 🧱 Tech stack
 
@@ -56,8 +57,19 @@ Copy `.env.example` to `.env.local` and set:
 | `AUTH_TRUST_HOST` | `true` when self-hosting behind a proxy / on a bare server |
 | `AUTH_GITHUB_ID` / `AUTH_GITHUB_SECRET` | GitHub OAuth app ([create one](https://github.com/settings/developers), callback `<url>/api/auth/callback/github`) |
 | `AUTH_GOOGLE_ID` / `AUTH_GOOGLE_SECRET` | Google OAuth client ([create one](https://console.cloud.google.com/apis/credentials), callback `<url>/api/auth/callback/google`) |
+| `AUTH_URL` | Your public site URL (e.g. `https://thefogcodex.com`) when running behind a proxy/domain |
+| `STAFF_ADMIN_EMAILS` | Comma-separated emails auto-promoted to **admin** on sign-in (bootstraps the staff panel) |
 
-You can enable just one provider — the `/login` page shows whichever are configured.
+OAuth is optional — **email + password sign-up always works**, even with no providers configured.
+
+### Staff & moderation
+
+Roles are `user` → `moderator` → `admin`. The staff panel lives at `/staff` (hidden from everyone else) and lets staff manage users, builds, and comments.
+
+- **Bootstrap an admin:** put your email in `STAFF_ADMIN_EMAILS`, then sign in — you're promoted to admin automatically. (Or set it directly: `UPDATE "user" SET role='admin' WHERE email='you@example.com';`)
+- **Admins** can change roles, ban/unban, and delete users, builds, and comments.
+- **Moderators** can ban regular users and delete any build or comment.
+- Nobody can act on someone at or above their own role, or on themselves. Banned users can't publish, rate, or comment.
 
 **Database migrations** (Drizzle):
 

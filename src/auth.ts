@@ -1,20 +1,32 @@
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
+import Credentials from "next-auth/providers/credentials";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { users, accounts, sessions, verificationTokens } from "@/db/schema";
+import { verifyPassword } from "@/lib/password";
+import type { StaffRole } from "@/types";
 
 // ============================================================
-// Auth.js (NextAuth v5) — GitHub + Google OAuth, backed by the
-// Drizzle/Postgres adapter with database sessions.
+// Auth.js (NextAuth v5).
 //
-// Reads AUTH_SECRET and AUTH_<PROVIDER>_ID / _SECRET from the env.
-// A provider with missing credentials simply can't be used to sign
-// in — it doesn't break the build or the rest of the site.
+// Providers: GitHub + Google OAuth (when configured) and an
+// email/password Credentials provider as a universal fallback.
+//
+// Because Credentials requires JWT sessions, the whole app uses
+// the "jwt" strategy. To keep role/ban changes immediate, the
+// session callback re-reads role + banned from the database on
+// each session lookup.
 // ============================================================
 
-const providers = [
+const adminEmails = (process.env.STAFF_ADMIN_EMAILS ?? "")
+  .split(",")
+  .map((s) => s.trim().toLowerCase())
+  .filter(Boolean);
+
+const oauthProviders = [
   ...(process.env.AUTH_GITHUB_ID ? [GitHub] : []),
   ...(process.env.AUTH_GOOGLE_ID ? [Google] : []),
 ];
@@ -26,20 +38,101 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     sessionsTable: sessions,
     verificationTokensTable: verificationTokens,
   }),
-  providers,
-  session: { strategy: "database" },
+  session: { strategy: "jwt" },
   trustHost: true,
   pages: { signIn: "/login" },
+  providers: [
+    ...oauthProviders,
+    Credentials({
+      name: "Email & password",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(creds) {
+        const email = String(creds?.email ?? "").trim().toLowerCase();
+        const password = String(creds?.password ?? "");
+        if (!email || !password) return null;
+        const rows = await db
+          .select()
+          .from(users)
+          .where(eq(users.email, email))
+          .limit(1);
+        const user = rows[0];
+        if (!user?.passwordHash) return null;
+        if (!verifyPassword(password, user.passwordHash)) return null;
+        if (user.banned) return null;
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          image: user.image,
+        };
+      },
+    }),
+  ],
   callbacks: {
-    session({ session, user }) {
-      if (session.user) session.user.id = user.id;
+    async signIn({ user }) {
+      // Block banned users from establishing a session (OAuth path).
+      if (!user?.id) return true;
+      try {
+        const rows = await db
+          .select({ banned: users.banned })
+          .from(users)
+          .where(eq(users.id, user.id))
+          .limit(1);
+        if (rows[0]?.banned) return false;
+      } catch {
+        /* allow on lookup error */
+      }
+      return true;
+    },
+    jwt({ token, user }) {
+      if (user?.id) token.sub = user.id;
+      return token;
+    },
+    async session({ session, token }) {
+      if (!token.sub || !session.user) return session;
+      try {
+        const rows = await db
+          .select()
+          .from(users)
+          .where(eq(users.id, token.sub))
+          .limit(1);
+        const u = rows[0];
+        if (u) {
+          session.user.id = u.id;
+          session.user.role = (u.role as StaffRole) ?? "user";
+          session.user.banned = u.banned;
+          session.user.name = u.name ?? session.user.name;
+          session.user.email = u.email ?? session.user.email;
+          session.user.image = u.image ?? session.user.image;
+        }
+      } catch {
+        session.user.id = token.sub;
+        session.user.role = "user";
+        session.user.banned = false;
+      }
       return session;
+    },
+  },
+  events: {
+    async signIn({ user }) {
+      // Bootstrap admins listed in STAFF_ADMIN_EMAILS.
+      if (user?.id && user.email && adminEmails.includes(user.email.toLowerCase())) {
+        try {
+          await db.update(users).set({ role: "admin" }).where(eq(users.id, user.id));
+        } catch {
+          /* non-fatal */
+        }
+      }
     },
   },
 });
 
-/** Provider ids that are actually configured (drive the /login UI). */
+/** Which sign-in methods are available (drives the /login + /register UI). */
 export const enabledProviders = {
   github: Boolean(process.env.AUTH_GITHUB_ID),
   google: Boolean(process.env.AUTH_GOOGLE_ID),
+  credentials: true,
 };

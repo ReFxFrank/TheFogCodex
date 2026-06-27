@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import * as Popover from "@radix-ui/react-popover";
-import { LogOut, User as UserIcon, LayoutGrid, LogIn } from "lucide-react";
+import { LogOut, User as UserIcon, LayoutGrid, LogIn, ShieldCheck } from "lucide-react";
+import { isStaff } from "@/lib/permissions";
 
 export function UserMenu() {
   const { data: session, status } = useSession();
@@ -57,6 +58,11 @@ export function UserMenu() {
               <p className="truncate text-xs text-ink-3">{user.email}</p>
             )}
           </div>
+          {isStaff(user.role) && (
+            <MenuLink href="/staff" icon={<ShieldCheck className="h-4 w-4 text-gold" />}>
+              Staff panel
+            </MenuLink>
+          )}
           <MenuLink href="/profile" icon={<LayoutGrid className="h-4 w-4" />}>
             My builds
           </MenuLink>

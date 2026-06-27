@@ -8,11 +8,11 @@ import { CredentialsForm } from "@/components/app/credentials-form";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Sign in",
-  description: "Sign in to publish your own Dead by Daylight builds, rate, and comment.",
+  title: "Create an account",
+  description: "Make a Fog Codex account to publish builds, rate, and comment.",
 };
 
-export default async function LoginPage({
+export default async function RegisterPage({
   searchParams,
 }: {
   searchParams: Promise<{ callbackUrl?: string }>;
@@ -29,10 +29,11 @@ export default async function LoginPage({
           <span className="mx-auto grid h-12 w-12 place-items-center rounded-xl border border-white/10 bg-fog-800 font-display text-xl font-bold text-fog-gradient">
             F
           </span>
-          <h1 className="mt-4 font-display text-2xl font-bold text-ink">Sign in</h1>
+          <h1 className="mt-4 font-display text-2xl font-bold text-ink">
+            Create an account
+          </h1>
           <p className="mt-2 text-sm text-ink-2">
-            Publish your own builds, rate other people's loadouts, and jump into the
-            comments. Browsing is free either way.
+            Just an email and a password — no verification email, no fuss.
           </p>
         </div>
 
@@ -52,7 +53,7 @@ export default async function LoginPage({
         )}
 
         <div className={hasOAuth ? "" : "mt-6"}>
-          <CredentialsForm mode="signin" callbackUrl={safeCallback} />
+          <CredentialsForm mode="register" callbackUrl={safeCallback} />
         </div>
       </div>
 

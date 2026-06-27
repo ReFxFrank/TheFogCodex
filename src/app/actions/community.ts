@@ -26,6 +26,7 @@ export type ActionResult =
 export async function publishBuild(input: PublishInput): Promise<ActionResult> {
   const session = await auth();
   if (!session?.user?.id) return { ok: false, error: "You must be signed in to publish a build." };
+  if (session.user.banned) return { ok: false, error: "Your account is suspended." };
 
   const title = input.title?.trim() ?? "";
   const summary = input.summary?.trim() ?? "";
@@ -91,6 +92,7 @@ export async function rateBuild(
 ): Promise<ActionResult> {
   const session = await auth();
   if (!session?.user?.id) return { ok: false, error: "Sign in to rate builds." };
+  if (session.user.banned) return { ok: false, error: "Your account is suspended." };
   const v = Math.round(value);
   if (v < 1 || v > 5) return { ok: false, error: "Rating must be 1–5." };
 
@@ -113,6 +115,7 @@ export async function addComment(
 ): Promise<ActionResult> {
   const session = await auth();
   if (!session?.user?.id) return { ok: false, error: "Sign in to comment." };
+  if (session.user.banned) return { ok: false, error: "Your account is suspended." };
   const text = body?.trim() ?? "";
   if (text.length < 1) return { ok: false, error: "Comment can't be empty." };
   if (text.length > 1000) return { ok: false, error: "Comment is too long (1000 max)." };

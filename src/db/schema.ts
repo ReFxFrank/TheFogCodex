@@ -6,6 +6,7 @@ import {
   integer,
   jsonb,
   unique,
+  boolean,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccountType } from "next-auth/adapters";
 
@@ -27,6 +28,12 @@ export const users = pgTable("user", {
   email: text("email").unique(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+  // Email/password accounts store a hash here; OAuth-only users leave it null.
+  passwordHash: text("passwordHash"),
+  // Staff / moderation.
+  role: text("role").notNull().default("user"), // "user" | "moderator" | "admin"
+  banned: boolean("banned").notNull().default(false),
+  bannedReason: text("bannedReason"),
 });
 
 export const accounts = pgTable(

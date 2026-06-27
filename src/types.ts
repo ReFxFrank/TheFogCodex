@@ -7,6 +7,10 @@
 export const ROLES = ["survivor", "killer"] as const;
 export type Role = (typeof ROLES)[number];
 
+// Staff / moderation roles (account-level, unrelated to survivor/killer).
+export const STAFF_ROLES = ["user", "moderator", "admin"] as const;
+export type StaffRole = (typeof STAFF_ROLES)[number];
+
 // Perk gameplay categories — used to filter the knowledgebase.
 export const SURVIVOR_PERK_CATEGORIES = [
   "exhaustion",
