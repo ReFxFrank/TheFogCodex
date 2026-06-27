@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { Session } from "next-auth";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { auth } from "@/auth";
@@ -17,7 +18,12 @@ export const metadata: Metadata = {
 };
 
 export default async function ProfilePage() {
-  const session = await auth();
+  let session: Session | null = null;
+  try {
+    session = await auth();
+  } catch (err) {
+    console.error("[profile] auth/db error:", err);
+  }
 
   if (!session?.user?.id) {
     return (
@@ -35,7 +41,12 @@ export default async function ProfilePage() {
     );
   }
 
-  const builds = await getUserBuilds(session.user.id);
+  let builds: Awaited<ReturnType<typeof getUserBuilds>> = [];
+  try {
+    builds = await getUserBuilds(session.user.id);
+  } catch (err) {
+    console.error("[profile] failed to load builds:", err);
+  }
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">

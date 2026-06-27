@@ -37,7 +37,14 @@ export default async function CommunityPage({
     sp.role === "survivor" || sp.role === "killer" ? sp.role : undefined;
   const sort = sp.sort === "top" ? "top" : "recent";
 
-  const builds = await listCommunityBuilds({ role, sort });
+  let builds: Awaited<ReturnType<typeof listCommunityBuilds>> = [];
+  let dbDown = false;
+  try {
+    builds = await listCommunityBuilds({ role, sort });
+  } catch (err) {
+    console.error("[community] failed to load builds:", err);
+    dbDown = true;
+  }
 
   const tabHref = (next: Record<string, string | undefined>) => {
     const params = new URLSearchParams();
@@ -104,7 +111,12 @@ export default async function CommunityPage({
         </div>
       </div>
 
-      {builds.length === 0 ? (
+      {dbDown ? (
+        <EmptyState
+          title="Community isn't available right now"
+          message="Couldn't reach the database. If you're self-hosting, make sure Postgres is running and DATABASE_URL is set in .env.local, then restart the app."
+        />
+      ) : builds.length === 0 ? (
         <EmptyState
           title="No community builds yet"
           message="Be the first to publish one — draft a loadout in the sandbox and share it with the fog."

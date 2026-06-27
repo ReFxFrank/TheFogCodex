@@ -39,19 +39,32 @@ export default async function CommunityBuildPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const summary = await getCommunityBuild(slug);
+
+  let summary: Awaited<ReturnType<typeof getCommunityBuild>> = null;
+  let rating = { avg: 0, count: 0, userValue: null as number | null };
+  let comments: Awaited<ReturnType<typeof getComments>> = [];
+  let currentUserId: string | null = null;
+  try {
+    summary = await getCommunityBuild(slug);
+    if (summary) {
+      const session = await auth();
+      currentUserId = session?.user?.id ?? null;
+      const [r, c] = await Promise.all([
+        getRatingSummary(summary.build.id, currentUserId ?? undefined),
+        getComments(summary.build.id),
+      ]);
+      rating = r;
+      comments = c;
+    }
+  } catch (err) {
+    console.error("[community detail] db error:", err);
+    summary = null;
+  }
   if (!summary) notFound();
 
   const b = summary.build;
   const role = b.role as Role;
-  const session = await auth();
-  const currentUserId = session?.user?.id ?? null;
   const isOwner = currentUserId === b.authorId;
-
-  const [rating, comments] = await Promise.all([
-    getRatingSummary(b.id, currentUserId ?? undefined),
-    getComments(b.id),
-  ]);
 
   const character = b.characterSlug ? getCharacter(b.characterSlug) : undefined;
   const perks = getPerks(b.perkSlugs);
