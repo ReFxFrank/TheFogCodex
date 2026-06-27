@@ -10,6 +10,7 @@ import { titleCase } from "@/lib/utils";
 import { PerkSlot } from "./perk-slot";
 import { LoadoutRow } from "./loadout-row";
 import { FilterCombo } from "./filter-combo";
+import { PublishPanel } from "./publish-panel";
 import { Button } from "@/components/ui/button";
 
 function parseList(v: string | null): string[] {
@@ -204,6 +205,8 @@ export function BuildSandbox() {
           })}
         </div>
       </div>
+
+      <PublishPanel role={role} characterSlug={char} perkSlugs={selected} />
     </div>
   );
 }
