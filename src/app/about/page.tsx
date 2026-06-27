@@ -9,15 +9,15 @@ import { META_TIER } from "@/types";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "What The Fog Codex is, how builds are rated, the fan disclaimer, and the data sources behind this unofficial Dead by Daylight resource.",
+    "What The Fog Codex is, how the ratings work, the fan disclaimer, and where the data comes from.",
 };
 
 const TIER_MEANING: Record<string, string> = {
-  S: "Meta-defining. Among the strongest options this patch — the benchmark others are measured against.",
-  A: "Strong and dependable. A great pick in most matches without being oppressive.",
-  B: "Solid and situational. Rewards the right map, killer power, or team — with real trade-offs.",
-  C: "Niche or fading. Works, but usually outclassed by a meta alternative.",
-  "off-meta": "Fun, experimental, or a personal-preference pick. Bring it because you enjoy it.",
+  S: "Meta-defining. About as strong as it gets this patch.",
+  A: "Really good in most games, without being oppressive.",
+  B: "Solid, but it wants the right map, killer, or team to shine.",
+  C: "Works fine, but something meta usually does the job better.",
+  "off-meta": "Bring it because it's fun, not because it's optimal.",
 };
 
 export default function AboutPage() {
@@ -26,26 +26,25 @@ export default function AboutPage() {
       <PageHeader
         eyebrow="About"
         title="What this is"
-        description="The Fog Codex is a curated, cross-linked library of Dead by Daylight builds and a complete perk knowledgebase — built to be a pleasure to browse rather than a wall of text or a raw stat dump."
+        description="A Dead by Daylight build and perk reference that's actually nice to look at. Most resources are either a randomizer, a wall of text, or a spreadsheet. This is the version I wanted to exist."
         className="mb-10"
       />
 
       <div className="flex flex-col gap-10">
-        <Section title="A graph, not a list">
+        <Section title="Everything links to everything">
           <p>
-            Every build is a first-class object with a visual loadout, an honest
-            read on why it works, and matchup notes. Every perk has its own page
-            listing the builds that use it. Every character links to their perks
-            and recommended builds. Tap anything, follow it anywhere — the whole
-            site is one connected graph, and every filtered view is a real,
-            shareable URL.
+            Every build shows its loadout, what it's for, and what it's bad
+            against. Every perk has its own page that lists the builds running it.
+            Every character links to their perks and the builds that suit them. So
+            you can start anywhere and just keep tapping, and any filtered view you
+            land on has its own link you can send to a friend.
           </p>
         </Section>
 
-        <Section title="How builds are rated">
+        <Section title="How the ratings work">
           <p>
-            We try to give honest signal instead of hype. There is no “100% win
-            rate” here. Each build carries two independent ratings:
+            No hype, no “100% win rate” nonsense. Each build gets two separate
+            ratings, because strong and easy aren't the same thing:
           </p>
           <div className="mt-4 flex flex-col gap-4">
             <div className="rounded-xl glass p-4">
@@ -69,83 +68,81 @@ export default function AboutPage() {
               </div>
               <div className="flex flex-col gap-2 text-sm text-ink-2">
                 <span className="flex items-center gap-3">
-                  <DifficultyDots difficulty="beginner" /> Beginner — forgiving, value comes automatically.
+                  <DifficultyDots difficulty="beginner" /> Beginner — value mostly happens on its own.
                 </span>
                 <span className="flex items-center gap-3">
-                  <DifficultyDots difficulty="intermediate" /> Intermediate — a few habits to learn.
+                  <DifficultyDots difficulty="intermediate" /> Intermediate — a couple of habits to pick up.
                 </span>
                 <span className="flex items-center gap-3">
-                  <DifficultyDots difficulty="advanced" /> Advanced — rewards timing and game sense.
+                  <DifficultyDots difficulty="advanced" /> Advanced — wants good timing and game sense.
                 </span>
                 <span className="flex items-center gap-3">
-                  <DifficultyDots difficulty="expert" /> Expert — high skill floor and ceiling.
+                  <DifficultyDots difficulty="expert" /> Expert — easy to throw, scary in the right hands.
                 </span>
               </div>
             </div>
           </div>
           <p className="mt-4">
-            A high tier doesn&apos;t mean easy: a build can be S-tier and demand
-            real mechanical skill. We separate the two on purpose, and we always
-            name what a build trades away and what it&apos;s weak against.
+            A high tier doesn't mean it's easy. Plenty of S-tier stuff will lose you
+            games until you learn it, which is exactly why the two ratings are
+            separate. And every build tells you what it gives up and what it hates
+            running into.
           </p>
         </Section>
 
-        <Section title="Meta history flags">
+        <Section title="The “meta history” flags">
           <p>
-            Some perks have been buffed, nerfed, or argued about for years. Where
-            that history matters, a perk carries a gold{" "}
-            <span className="font-medium text-gold">Meta history</span> flag with a
-            short, factual note — for example a perk that was once considered
-            overpowered and has since been reined in. It&apos;s context most
-            resources leave out.
+            Some perks have been buffed, nerfed, and argued about for years. When
+            that history actually matters, the perk gets a gold{" "}
+            <span className="font-medium text-gold">Meta history</span> note — like
+            when something used to be busted and finally got toned down. It's the
+            kind of context most build lists skip.
           </p>
         </Section>
 
-        <Section title="Data &amp; accuracy">
+        <Section title="A note on accuracy">
           <p>
-            This catalogue is seeded against a snapshot labelled{" "}
+            The data here is built against{" "}
             <strong className="text-ink-2">Patch {ROSTER_STATS.patch}</strong>. The
-            live game has {ROSTER_STATS.totalKillers} Killers and{" "}
-            {ROSTER_STATS.totalSurvivors} Survivors; the Codex catalogues a
-            representative slice of {ROSTER_STATS.cataloguedCharacters} characters,{" "}
-            {ROSTER_STATS.cataloguedPerks} perks and {ROSTER_STATS.cataloguedBuilds}{" "}
-            builds. Killer tiers are approximate community estimates and shift with
-            every balance pass — treat them as a starting point for your own
-            experimentation, not gospel.
+            live game has {ROSTER_STATS.totalKillers} killers and{" "}
+            {ROSTER_STATS.totalSurvivors} survivors; this covers a solid chunk of
+            them — {ROSTER_STATS.cataloguedCharacters} characters,{" "}
+            {ROSTER_STATS.cataloguedPerks} perks, {ROSTER_STATS.cataloguedBuilds}{" "}
+            builds. Killer tiers are rough community estimates and they move every
+            balance patch, so take them as a starting point and trust your own
+            results.
           </p>
         </Section>
 
-        <Section title="Data sources">
+        <Section title="Where the data comes from">
           <p>
-            Perk effects are paraphrased in our own words from publicly available
-            community references — chiefly the community-maintained Dead by
-            Daylight wikis and widely-cited community tier lists and statistics
-            sites. We don&apos;t reproduce wiki text or in-game art; every perk and
-            character image here is a generated placeholder.
+            All the perk text is rewritten in plain English from public community
+            references — mostly the DbD wikis and the usual community tier lists and
+            stats sites. Nothing here is copied wiki text, and there's no real
+            in-game art; every perk and character image is a generated placeholder.
           </p>
         </Section>
 
-        <Section title="Unofficial &amp; fan-made">
+        <Section title="Fan-made, obviously">
           <p>
-            The Fog Codex is an unofficial fan project. It is{" "}
+            This is an unofficial fan project and is{" "}
             <strong className="text-ink-2">
               not affiliated with or endorsed by Behaviour Interactive
             </strong>
-            . Dead by Daylight and all related characters, perks, names and marks
-            are the property of their respective owners. This site is made by a
-            fan, for fans, with respect for the source material.
+            . Dead by Daylight and all its characters, perks, and names belong to
+            their owners. Made by a fan, for fans.
           </p>
         </Section>
 
         <div className="rounded-2xl glass p-6 text-center">
           <p className="text-sm text-ink-2">
-            Ready to dive back in?{" "}
+            Anyway — go{" "}
             <Link href="/builds" className="text-accent hover:underline">
-              Browse every build
+              browse the builds
             </Link>{" "}
             or{" "}
             <Link href="/perks" className="text-accent hover:underline">
-              open the perk knowledgebase
+              dig through the perks
             </Link>
             .
           </p>

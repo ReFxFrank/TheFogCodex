@@ -6,7 +6,7 @@ import { CharactersBrowser } from "@/components/app/characters-browser";
 export const metadata: Metadata = {
   title: "Characters",
   description:
-    "The Dead by Daylight roster — Survivors and Killers with tiers, archetypes, their teachable perks and recommended builds.",
+    "The Dead by Daylight cast. Killers and survivors with a rough tier, the perks they bring, and builds that suit each one.",
 };
 
 function Fallback() {
@@ -23,9 +23,9 @@ export default function CharactersPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
       <PageHeader
-        eyebrow="The roster"
-        title="Survivors & Killers of the fog"
-        description="A representative slice of the cast — each with a lore blurb, their teachable perks, and the builds that suit them. Killers carry an approximate current-patch tier."
+        eyebrow="Roster"
+        title="The cast"
+        description="A good chunk of the roster, each with a short bio, the perks they bring, and builds that fit them. Killers get a rough current-patch tier (it shifts every update)."
         className="mb-8"
       />
       <Suspense fallback={<Fallback />}>

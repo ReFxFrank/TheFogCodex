@@ -6,7 +6,7 @@ import { BuildsExplorer } from "@/components/app/builds-explorer";
 export const metadata: Metadata = {
   title: "Builds",
   description:
-    "Browse and filter the best Dead by Daylight builds for Survivors and Killers — by role, archetype, character, perk, difficulty and meta tier. Every view is a shareable URL.",
+    "Browse and filter Dead by Daylight builds for survivor and killer by role, archetype, character, perk, difficulty, or tier. Every filtered view has its own shareable link.",
 };
 
 function ExplorerFallback() {
@@ -26,9 +26,9 @@ export default function BuildsPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
       <PageHeader
-        eyebrow="Build browser"
-        title="Every build, one searchable library"
-        description="Filter by role, archetype, character, perk, difficulty and meta tier. Each build is a first-class object with a visual loadout and an honest read on why it works."
+        eyebrow="Builds"
+        title="The whole build library"
+        description="Filter by role, archetype, character, perk, difficulty, or tier. Every build shows its loadout up front, plus a straight read on what it's for and where it struggles."
         className="mb-8"
       />
       <Suspense fallback={<ExplorerFallback />}>

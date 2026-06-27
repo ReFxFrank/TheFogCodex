@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Community Builds",
   description:
-    "Builds created and shared by the community — rate them, comment, and submit your own.",
+    "Builds other players have put together. Rate them, leave a comment, and publish your own.",
 };
 
 const ROLE_TABS: { value: Role | "all"; label: string }[] = [
@@ -56,8 +56,8 @@ export default async function CommunityPage({
     >
       <PageHeader
         eyebrow="Community"
-        title="Builds from the fog-dwellers"
-        description="Loadouts created and shared by players. Rate them, leave a comment, and publish your own from the sandbox."
+        title="What everyone else is running"
+        description="Loadouts other players have put together. Rate them, leave a comment, or build your own and publish it from the sandbox."
         className="mb-8"
       >
         <Button asChild variant="accent" size="md">

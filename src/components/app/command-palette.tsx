@@ -132,7 +132,7 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
 
             <Command.List className="max-h-[55vh] overflow-y-auto overflow-x-hidden p-2">
               <Command.Empty className="px-3 py-8 text-center text-sm text-ink-2">
-                The fog swallows your search — nothing found for “{query}”.
+                Nothing found for “{query}”.
               </Command.Empty>
 
               {!query && (

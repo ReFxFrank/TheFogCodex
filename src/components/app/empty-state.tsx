@@ -11,7 +11,7 @@ interface EmptyStateProps {
 /** Friendly empty state with a little personality. */
 export function EmptyState({
   title = "The fog is thick here",
-  message = "No results match — loosen a filter and try again.",
+  message = "Nothing matches. Try loosening a filter.",
   action,
   className,
 }: EmptyStateProps) {

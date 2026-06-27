@@ -26,11 +26,11 @@ export default async function LoginPage({
           F
         </span>
         <h1 className="mt-4 font-display text-2xl font-bold text-ink">
-          Join the Codex
+          Sign in
         </h1>
         <p className="mt-2 text-sm text-ink-2">
-          Sign in to publish your own builds, rate the community&apos;s loadouts, and
-          join the discussion. Browsing stays free and open — no account needed.
+          Publish your own builds, rate other people's loadouts, and jump into the
+          comments. Browsing is free either way — no account needed for that.
         </p>
 
         <div className="mt-6 text-left">
@@ -42,8 +42,8 @@ export default async function LoginPage({
         </div>
 
         <p className="mt-6 text-xs text-ink-3">
-          By signing in you agree to keep it respectful. This is an unofficial fan
-          project — see the{" "}
+          Signing in means keeping it civil. This is a fan project; the boring
+          details live on the{" "}
           <Link href="/about" className="text-accent hover:underline">
             About page
           </Link>

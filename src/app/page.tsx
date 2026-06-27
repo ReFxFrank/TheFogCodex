@@ -15,7 +15,7 @@ export default function Home() {
       <section className="relative flex flex-col items-center gap-7 py-20 text-center sm:py-28">
         <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-ink-2">
           <Sparkles className="h-3.5 w-3.5 text-gold" />
-          Patch {ROSTER_STATS.patch} · curated &amp; cross-linked
+          Up to date for Patch {ROSTER_STATS.patch}
         </span>
 
         <h1 className="font-display text-5xl font-bold leading-[1.05] tracking-tight text-fog-gradient sm:text-7xl">
@@ -23,9 +23,9 @@ export default function Home() {
         </h1>
 
         <p className="max-w-2xl text-balance text-lg leading-relaxed text-ink-2">
-          A gorgeously dark library of the strongest Dead by Daylight builds for
-          Survivors and Killers — every loadout rendered like the in-game screen,
-          every perk explained, the whole thing one big searchable graph.
+          Builds and perks for Dead by Daylight, without the 4,000-word articles.
+          Every build shows the actual loadout, what it's good at, and where it
+          falls apart. Tap a perk to see what it does and who else runs it.
         </p>
 
         <LandingActions />
@@ -50,8 +50,8 @@ export default function Home() {
               <Shield className="h-8 w-8 text-accent" />
               <h2 className="mt-4 font-display text-2xl font-semibold text-ink">Survive</h2>
               <p className="mt-2 max-w-sm text-sm text-ink-2">
-                Out-loop, out-heal, and out-think the Killer. Anti-tunnel meta,
-                gen-rush, stealth, boons and clutch endgame builds.
+                Loop the killer, patch your team up, and get the gates open.
+                Anti-tunnel, gen-rush, stealth, boon, and endgame builds.
               </p>
             </div>
             <span className="relative mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
@@ -72,8 +72,8 @@ export default function Home() {
               <Skull className="h-8 w-8 text-accent" />
               <h2 className="mt-4 font-display text-2xl font-semibold text-ink">Hunt</h2>
               <p className="mt-2 max-w-sm text-sm text-ink-2">
-                Pressure gens, cut rotations, and snowball the trial. Distributed
-                slowdown, info, hex gambles, stealth and endgame traps.
+                Slow the gens down, find people fast, and snowball before they
+                recover. Slowdown, info, hex, stealth, and endgame builds.
               </p>
             </div>
             <span className="relative mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
@@ -92,7 +92,7 @@ export default function Home() {
               Featured
             </p>
             <h2 className="mt-1 font-display text-2xl font-semibold text-ink">
-              Builds worth trying tonight
+              A few worth trying tonight
             </h2>
           </div>
           <Link
@@ -118,18 +118,18 @@ export default function Home() {
         {[
           {
             href: "/perks",
-            title: "Perk knowledgebase",
-            body: `${ROSTER_STATS.cataloguedPerks} perks, paraphrased and tagged — with meta-history flags on the ones that have been buffed and nerfed.`,
+            title: "Perk reference",
+            body: `All ${ROSTER_STATS.cataloguedPerks} perks in plain English, tagged by what they do. The ones that got buffed or nerfed into the ground carry a little history note.`,
           },
           {
             href: "/characters",
             title: "The roster",
-            body: "Survivors and Killers with tiers, archetypes, their teachable perks and recommended builds.",
+            body: "Killers and survivors, the perks they bring, a rough tier, and the builds that suit them.",
           },
           {
             href: "/about",
-            title: "How builds are rated",
-            body: "Honest tiers and difficulty — what each build trades away, and what it's weak against. No 100% win-rate nonsense.",
+            title: "How the ratings work",
+            body: "Why every build tells you what it's bad at instead of pretending it wins every match.",
           },
         ].map((card) => (
           <Link

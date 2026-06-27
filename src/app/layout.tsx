@@ -23,7 +23,7 @@ const cinzel = Cinzel({
 
 const SITE_NAME = "The Fog Codex";
 const SITE_DESC =
-  "A curated, searchable library of the best Dead by Daylight builds for Survivors and Killers — backed by a complete perk knowledgebase. An unofficial fan resource.";
+  "Dead by Daylight builds worth actually running, for survivor and killer. See the real loadout, what it's good at, and where it falls apart. Plus a perk reference that explains what everything does. Made by a fan.";
 
 export const metadata: Metadata = {
   title: {

@@ -6,7 +6,7 @@ import { PerksExplorer } from "@/components/app/perks-explorer";
 export const metadata: Metadata = {
   title: "Perk Knowledgebase",
   description:
-    "A complete, paraphrased Dead by Daylight perk knowledgebase — filter Survivor and Killer perks by category and owner, with meta-history flags and the builds that use each one.",
+    "Every Dead by Daylight perk in plain English. Filter survivor and killer perks by category or owner, see which ones got buffed or nerfed, and find the builds that run them.",
 };
 
 function Fallback() {
@@ -23,9 +23,9 @@ export default function PerksPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
       <PageHeader
-        eyebrow="Knowledgebase"
-        title="The perk encyclopedia"
-        description="Every perk, paraphrased in plain language and tagged by what it actually does. Tap any perk to read its effect and every build that runs it."
+        eyebrow="Perks"
+        title="Every perk, explained"
+        description="What each perk actually does, in plain English, tagged so you can filter by playstyle. Tap one for the full effect and every build that runs it."
         className="mb-8"
       />
       <Suspense fallback={<Fallback />}>

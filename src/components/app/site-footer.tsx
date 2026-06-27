@@ -17,9 +17,8 @@ export function SiteFooter() {
               </span>
             </div>
             <p className="mt-3 text-sm leading-relaxed text-ink-2">
-              A curated library of Dead by Daylight builds and a complete perk
-              knowledgebase, made for players who'd rather browse something
-              beautiful than scroll a wall of text.
+              Dead by Daylight builds and a full perk reference, for people who'd
+              rather not scroll a wall of text to find a loadout.
             </p>
           </div>
 
