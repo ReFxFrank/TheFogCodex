@@ -110,7 +110,7 @@ Put Nginx in front for TLS/port 80 if exposing publicly.
 
 ## 🐳 Docker
 
-The app builds to a self-contained standalone server (`output: "standalone"`).
+A multi-stage `Dockerfile` builds the app and runs `next start`.
 
 ```bash
 docker build -t fog-codex .

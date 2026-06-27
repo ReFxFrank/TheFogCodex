@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // Emits a self-contained server at .next/standalone for tiny, dependency-free
-  // deploys (Docker / bare Ubuntu). `next start` still works exactly as normal.
-  output: "standalone",
+  // Pin the workspace root so a stray lockfile elsewhere on the host doesn't
+  // confuse Next's root inference.
+  outputFileTracingRoot: import.meta.dirname,
   images: {
     // All in-game art is supplied as local SVG/PNG placeholders under /public/images.
     // No remote patterns needed for the fan-resource build.

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ROSTER_STATS } from "@/data";
+import { EffectsToggle } from "./effects-toggle";
 
 export function SiteFooter() {
   return (
@@ -70,7 +71,10 @@ export function SiteFooter() {
             </Link>{" "}
             for data sources.
           </p>
-          <p className="shrink-0">Patch {ROSTER_STATS.patch}</p>
+          <div className="flex shrink-0 items-center gap-3">
+            <EffectsToggle />
+            <span>Patch {ROSTER_STATS.patch}</span>
+          </div>
         </div>
       </div>
     </footer>

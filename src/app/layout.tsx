@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/app/site-header";
 import { SiteFooter } from "@/components/app/site-footer";
 import { CommandPaletteProvider } from "@/components/app/command-palette";
 import { Providers } from "@/components/app/providers";
+import { fxInitScript } from "@/components/app/effects-toggle";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -57,6 +58,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${cinzel.variable}`}>
       <body className="antialiased">
+        <script dangerouslySetInnerHTML={{ __html: fxInitScript }} />
         <FogBackground />
         <Providers>
           <CommandPaletteProvider>

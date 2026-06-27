@@ -1,0 +1,4 @@
+# Drop real character art here as <character-slug>.png, then set the
+# character's `portrait` field in src/data/characters.ts to
+# /images/characters/<character-slug>.png.
+# Without art, components render generated SVG placeholders.
