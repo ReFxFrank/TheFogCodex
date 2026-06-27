@@ -1,0 +1,377 @@
+@import "tailwindcss";
+
+/* ============================================================
+   THE FOG CODEX — "Fog Glass" design system
+   Dark-only. Glassmorphism over a deep, cold fog gradient.
+   Survivor = cool teal/blue · Killer = crimson/ember.
+   ============================================================ */
+
+@theme {
+  /* Fog base scale (near-black, cold cast) */
+  --color-fog-950: #05060a;
+  --color-fog-900: #0a0b0f;
+  --color-fog-850: #0d0f16;
+  --color-fog-800: #11131b;
+  --color-fog-700: #181b25;
+  --color-fog-600: #222633;
+  --color-fog-500: #2c3140;
+
+  /* Text */
+  --color-ink: #ecedf1;
+  --color-ink-2: #a7abb8;
+  --color-ink-3: #6e7280;
+
+  /* Role accents */
+  --color-survivor: #4fb6c7;
+  --color-survivor-bright: #74d3e3;
+  --color-killer: #d6324a;
+  --color-killer-ember: #e8623c;
+
+  /* Highlight / bloodpoint gold */
+  --color-gold: #e3b341;
+
+  /* Meta tier colors */
+  --color-tier-s: #e3b341;
+  --color-tier-a: #4fd08a;
+  --color-tier-b: #5b9bd5;
+  --color-tier-c: #8a93a6;
+  --color-tier-off: #6e7280;
+
+  /* Typography */
+  --font-display: var(--font-cinzel), "Times New Roman", Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+
+  /* Radii */
+  --radius-xl: 0.9rem;
+  --radius-2xl: 1.25rem;
+
+  /* Motion */
+  --ease-fog: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  /* Dynamic role accent — overridden per-role via [data-role]. Default: survivor. */
+  --accent: #4fb6c7;
+  --accent-bright: #74d3e3;
+  --accent-glow: rgba(79, 182, 199, 0.35);
+  --accent-soft: rgba(79, 182, 199, 0.12);
+  color-scheme: dark;
+}
+
+[data-role="survivor"] {
+  --accent: #4fb6c7;
+  --accent-bright: #74d3e3;
+  --accent-glow: rgba(79, 182, 199, 0.35);
+  --accent-soft: rgba(79, 182, 199, 0.12);
+}
+
+[data-role="killer"] {
+  --accent: #d6324a;
+  --accent-bright: #e8623c;
+  --accent-glow: rgba(214, 50, 74, 0.4);
+  --accent-soft: rgba(214, 50, 74, 0.12);
+}
+
+@layer base {
+  * {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-fog-900);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Deep fog base painted behind everything */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(120% 80% at 50% -10%, #11131b 0%, transparent 55%),
+      radial-gradient(80% 60% at 85% 110%, rgba(34, 38, 51, 0.6) 0%, transparent 60%),
+      linear-gradient(180deg, #0a0b0f 0%, #07080d 55%, #05060a 100%);
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: #05060a;
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--accent-bright);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.01em;
+  }
+}
+
+/* ============================================================
+   Custom utilities
+   ============================================================ */
+
+/* Glassmorphic surface */
+@utility glass {
+  background: rgba(20, 22, 30, 0.55);
+  backdrop-filter: blur(16px) saturate(125%);
+  -webkit-backdrop-filter: blur(16px) saturate(125%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
+    0 12px 44px -16px rgba(0, 0, 0, 0.8);
+}
+
+/* Slightly more elevated glass */
+@utility glass-elevated {
+  background: rgba(28, 31, 42, 0.62);
+  backdrop-filter: blur(20px) saturate(130%);
+  -webkit-backdrop-filter: blur(20px) saturate(130%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08),
+    0 20px 60px -20px rgba(0, 0, 0, 0.85);
+}
+
+/* Role-accent helpers (read the dynamic --accent vars) */
+@utility text-accent {
+  color: var(--accent);
+}
+@utility text-accent-bright {
+  color: var(--accent-bright);
+}
+@utility bg-accent {
+  background-color: var(--accent);
+}
+@utility bg-accent-soft {
+  background-color: var(--accent-soft);
+}
+@utility border-accent {
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+}
+@utility ring-accent {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+/* Accent glow on hover surfaces */
+@utility glow-accent {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent),
+    0 0 28px -4px var(--accent-glow),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Thin glowing divider */
+@utility rule-glow {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--accent) 45%, transparent),
+    transparent
+  );
+}
+
+/* Subtle text gradient for hero wordmark */
+@utility text-fog-gradient {
+  background: linear-gradient(180deg, #ffffff 0%, #c8ccd6 55%, #8a8f9e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ============================================================
+   Component-ish classes
+   ============================================================ */
+
+/* The signature perk slot frame (in-game loadout diamond/square hybrid) */
+.perk-frame {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 1;
+  background:
+    radial-gradient(80% 80% at 50% 30%, rgba(255, 255, 255, 0.06), transparent 70%),
+    linear-gradient(160deg, rgba(40, 44, 58, 0.9), rgba(14, 16, 22, 0.95));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+    inset 0 0 22px -8px rgba(0, 0, 0, 0.9);
+  border-radius: 14%;
+  overflow: hidden;
+  transition: box-shadow 0.25s var(--ease-fog), transform 0.25s var(--ease-fog);
+}
+
+.perk-frame::after {
+  /* inner ornamental diamond */
+  content: "";
+  position: absolute;
+  inset: 14%;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, rgba(255, 255, 255, 0.08));
+  transform: rotate(45deg);
+  border-radius: 12%;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.perk-frame:hover {
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+    0 0 24px -4px var(--accent-glow);
+}
+
+/* Grain / fog texture overlay (very low opacity), fixed above the base gradient */
+.fog-grain {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Drifting fog blobs */
+.fog-blob {
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 9999px;
+  filter: blur(60px);
+  opacity: 0.5;
+  will-change: transform;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.16);
+  background-clip: padding-box;
+}
+
+/* ============================================================
+   Keyframes
+   ============================================================ */
+@keyframes fog-drift-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(6%, -4%, 0) scale(1.12);
+  }
+}
+@keyframes fog-drift-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1.05);
+  }
+  50% {
+    transform: translate3d(-7%, 5%, 0) scale(0.95);
+  }
+}
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+@keyframes shuffle-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+.animate-fog-a {
+  animation: fog-drift-a 26s ease-in-out infinite;
+}
+.animate-fog-b {
+  animation: fog-drift-b 32s ease-in-out infinite;
+}
+.animate-shuffle {
+  animation: shuffle-pulse 0.5s var(--ease-fog) infinite;
+}
+
+/* Section reveal — content is visible by default (base state has no
+   opacity:0), the entrance is purely additive, so it degrades safely
+   without JS and under reduced motion. */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.reveal-up {
+  animation: reveal-up 0.6s var(--ease-fog) both;
+}
+
+/* Skeleton shimmer */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(255, 255, 255, 0.08) 37%,
+    rgba(255, 255, 255, 0.03) 63%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+/* ============================================================
+   Reduced motion — disable non-essential motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-fog-a,
+  .animate-fog-b,
+  .animate-shuffle,
+  .shimmer,
+  .reveal-up {
+    animation: none !important;
+  }
+}
