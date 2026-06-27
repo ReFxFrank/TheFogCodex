@@ -1,6 +1,6 @@
 # The Fog Codex
 
-A polished, fast, dark-themed **Dead by Daylight builds & perk knowledgebase**. Every build renders as a visual in-game-style loadout, backed by a complete, cross-linked perk encyclopedia and a ⌘K command palette.
+A polished, fast, dark-themed **Dead by Daylight builds & perk knowledgebase** with a community layer. Every curated build renders as a visual in-game-style loadout, backed by a complete cross-linked perk encyclopedia, a ⌘K command palette — and a sign-in-gated community where players publish their own builds, rate them, and comment.
 
 > **Unofficial fan-made resource.** Not affiliated with or endorsed by Behaviour Interactive. Dead by Daylight and all related characters, perks, names and marks are the property of their respective owners. All effect text is paraphrased; all character/perk art is generated placeholder.
 
@@ -8,19 +8,29 @@ A polished, fast, dark-themed **Dead by Daylight builds & perk knowledgebase**. 
 
 ## ✨ Features
 
+**Curated knowledgebase (no backend needed):**
+
 - **Visual loadouts** — every build is a row of in-game-style perk slots, not a bullet list.
-- **Honest signal** — each build carries a meta tier (S/A/B/C/off-meta) _and_ a difficulty rating, with explicit *Why it works / Trade-offs / Best against* notes.
+- **Honest signal** — meta tier (S/A/B/C/off-meta) _and_ difficulty, with *Why it works / Trade-offs / Best against* notes.
 - **Deep cross-linking** — tap any perk → its page → every build that uses it. The whole site is a graph.
-- **Meta-history flags** — notable perks carry a "was-OP / nerfed / controversial" note (e.g. Pain Resonance, Dead Hard, Eruption).
-- **⌘K command palette** — fuzzy search across builds, perks and characters at once, plus quick actions and a randomizer.
-- **URL-serialized filters** — every filtered view of `/builds` and `/perks` is a shareable link; back/forward works.
+- **Meta-history flags** — notable perks carry a "was-OP / nerfed / controversial" note (Pain Resonance, Dead Hard, Eruption…).
+- **⌘K command palette** — fuzzy search across builds, perks and characters, plus quick actions and a randomizer.
+- **URL-serialized filters** — every filtered view of `/builds` and `/perks` is a shareable link.
 - **Build sandbox** (`/builds/new`) — draft a loadout and share it as an encoded URL.
 - **Favorites** — heart any build; persisted to `localStorage`, no account needed.
-- **Survivor (cool teal) / Killer (crimson) accent split** across the whole UI.
+
+**Community layer (database + auth):**
+
+- **Sign in with GitHub or Google** (Auth.js / NextAuth v5).
+- **Publish your own builds** from the sandbox to `/community`.
+- **Star ratings** (1–5) and **threaded comments** on community builds.
+- **Profile** (`/profile`) listing everything you've shared; delete your own builds and comments.
 
 ## 🧱 Tech stack
 
-Next.js 15 (App Router, RSC, TypeScript strict) · Tailwind CSS v4 · Radix UI primitives · cmdk · Fuse.js · lucide-react. **No database, no API** — all content is typed data under `src/data`, statically rendered.
+Next.js 15 (App Router, RSC, TypeScript strict) · Tailwind CSS v4 · Radix UI · cmdk · Fuse.js · lucide-react. The community layer adds **Auth.js v5**, **Drizzle ORM** (pure TS — no native binary), and **Postgres** (via `node-postgres`).
+
+The curated content is typed data under `src/data` and renders **fully static**. Only the community/auth routes (`/community`, `/profile`, `/login`, `/api/auth/*`) touch the database and render dynamically — so the bulk of the site stays cacheable and fast.
 
 ---
 
@@ -28,53 +38,67 @@ Next.js 15 (App Router, RSC, TypeScript strict) · Tailwind CSS v4 · Radix UI p
 
 ```bash
 npm install
-npm run dev
-# open http://localhost:3000
+cp .env.example .env.local        # then fill in the values (see below)
+npm run db:migrate                # create the tables in your Postgres DB
+npm run dev                       # http://localhost:3000
 ```
 
-## 📦 Production build & run on Ubuntu
+Browsing works immediately. Sign-in/community features need a database and OAuth credentials configured in `.env.local`.
 
-Requires **Node.js ≥ 18.18** (Node 20 LTS recommended — see `.nvmrc`).
+## 🔐 Environment & setup
+
+Copy `.env.example` to `.env.local` and set:
+
+| Variable | What it is |
+| --- | --- |
+| `DATABASE_URL` | Postgres connection string, e.g. `postgresql://user:pass@localhost:5432/fogcodex` |
+| `AUTH_SECRET` | Random secret — generate with `npx auth secret` or `openssl rand -base64 33` |
+| `AUTH_TRUST_HOST` | `true` when self-hosting behind a proxy / on a bare server |
+| `AUTH_GITHUB_ID` / `AUTH_GITHUB_SECRET` | GitHub OAuth app ([create one](https://github.com/settings/developers), callback `<url>/api/auth/callback/github`) |
+| `AUTH_GOOGLE_ID` / `AUTH_GOOGLE_SECRET` | Google OAuth client ([create one](https://console.cloud.google.com/apis/credentials), callback `<url>/api/auth/callback/google`) |
+
+You can enable just one provider — the `/login` page shows whichever are configured.
+
+**Database migrations** (Drizzle):
 
 ```bash
-# 1. Install Node 20 (via nvm, recommended)
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-nvm install 20 && nvm use 20
-
-#    …or via apt:
-#    sudo apt update && sudo apt install -y nodejs npm
-
-# 2. Install, build, run
-npm ci                 # clean, reproducible install from package-lock.json
-npm run build          # produces an optimized static/SSG build
-npm run start          # serves on http://localhost:3000
-
-# Use a different port:
-PORT=8080 npm run start
+npm run db:generate   # regenerate SQL after editing src/db/schema.ts
+npm run db:migrate    # apply pending migrations (uses DATABASE_URL)
+npm run db:studio     # optional: browse the DB in Drizzle Studio
 ```
 
-That's the entire deployment for a single Ubuntu box. To keep it running, use a process manager:
+## 📦 Production on Ubuntu
 
-**pm2**
+Requires **Node.js ≥ 18.18** (Node 20 LTS recommended — see `.nvmrc`) and a reachable Postgres.
 
 ```bash
-npm i -g pm2
-pm2 start "npm run start" --name fog-codex
-pm2 save && pm2 startup
+# 1) Postgres (one box example)
+sudo apt update && sudo apt install -y postgresql
+sudo -u postgres psql -c "CREATE ROLE fog LOGIN PASSWORD 'change-me';"
+sudo -u postgres psql -c "CREATE DATABASE fogcodex OWNER fog;"
+
+# 2) App
+nvm install 20 && nvm use 20      # or: sudo apt install -y nodejs npm
+npm ci
+cp .env.example .env.local        # fill in DATABASE_URL, AUTH_SECRET, OAuth creds
+npm run db:migrate                # create tables
+npm run build
+npm run start                     # http://localhost:3000  (PORT=8080 to change)
 ```
 
-**systemd** (`/etc/systemd/system/fog-codex.service`)
+Keep it alive with **pm2** (`pm2 start "npm run start" --name fog-codex`) or **systemd**:
 
 ```ini
+# /etc/systemd/system/fog-codex.service
 [Unit]
 Description=The Fog Codex
-After=network.target
+After=network.target postgresql.service
 
 [Service]
 WorkingDirectory=/srv/fog-codex
 ExecStart=/usr/bin/npm run start
+EnvironmentFile=/srv/fog-codex/.env.local
 Environment=NODE_ENV=production
-Environment=PORT=3000
 Restart=always
 User=www-data
 
@@ -82,24 +106,21 @@ User=www-data
 WantedBy=multi-user.target
 ```
 
-```bash
-sudo systemctl enable --now fog-codex
-```
-
-Put Nginx in front of it as a reverse proxy for TLS/port 80 if exposing publicly.
+Put Nginx in front for TLS/port 80 if exposing publicly.
 
 ## 🐳 Docker
 
-The app is configured with `output: "standalone"`, so the image is tiny and self-contained.
+The app builds to a self-contained standalone server (`output: "standalone"`).
 
 ```bash
 docker build -t fog-codex .
-docker run -p 3000:3000 fog-codex
+docker run -p 3000:3000 --env-file .env.local fog-codex
+# (point DATABASE_URL at a reachable Postgres — e.g. a linked container or host)
 ```
 
 ## ▲ Vercel
 
-Push to GitHub and import the repo — zero configuration. Framework auto-detected as Next.js.
+Import the repo (zero config for the app). Add a hosted Postgres (Vercel Postgres / Neon / Supabase) and set the env vars in the dashboard; run `db:migrate` against it once.
 
 ---
 
@@ -107,46 +128,42 @@ Push to GitHub and import the repo — zero configuration. Framework auto-detect
 
 ```
 src/
-  app/                     # routes (App Router)
-    page.tsx               # landing
-    builds/                # /builds, /builds/[slug], /builds/new (sandbox)
-    perks/                 # /perks, /perks/[slug]
-    characters/            # /characters, /characters/[slug]
-    about/                 # /about — how builds are rated, disclaimer, sources
-    globals.css            # "Fog Glass" design tokens + utilities
-  components/
-    ui/                    # shadcn-style primitives (Button)
-    app/                   # domain components (PerkSlot, BuildCard, CommandPalette…)
-  data/                    # ← all content lives here (typed, no DB)
-    perks.ts               # the perk knowledgebase
-    characters.ts          # the roster
-    builds.ts              # the build library
-    meta-notes.ts          # "was-OP / nerfed" meta-history annotations
-    addons.ts, offerings.ts# loadout-extras stubs
-    index.ts               # in-memory index + the cross-link graph
-  hooks/                   # use-favorites (localStorage store)
-  lib/                     # cn(), search (Fuse), placeholders
-  types.ts                 # all domain types (union types derived from as-const arrays)
+  app/
+    page.tsx                 # landing
+    builds/ perks/ characters/ about/   # curated, static content
+    builds/new/              # sandbox (+ publish-to-community)
+    community/               # /community, /community/[slug]  (dynamic, DB)
+    profile/  login/         # auth-gated pages (dynamic)
+    actions/community.ts     # server actions: publish / rate / comment / delete
+    api/auth/[...nextauth]/  # Auth.js route handlers
+    globals.css              # "Fog Glass" design tokens
+  components/ui|app/         # primitives + domain components
+  data/                      # curated content (perks, characters, builds, meta-notes)
+  db/                        # Drizzle schema + Postgres client
+  lib/                       # cn(), search (Fuse), placeholders, community queries
+  auth.ts                    # Auth.js (NextAuth v5) config
+  types.ts                   # domain types
+drizzle/                     # generated SQL migrations
 ```
 
-## ➕ Adding content
+## ➕ Adding curated content
 
-All content is plain typed data — no database, no admin panel. Slugs are the join keys, so keep them consistent.
+All curated content is plain typed data — no database needed. Slugs are the join keys.
 
-- **Add a build** → append to `src/data/builds.ts`. Give it a unique `slug`, exactly four `perkSlugs` (each must exist in `perks.ts`), an optional `characterSlug`, archetypes, `difficulty`, `metaTier`, and the honest copy fields. Set `featured: true` to surface it on the landing page.
-- **Add a perk** → append to `src/data/perks.ts` (unique `slug`, `role`, `categories`, paraphrased `description`, optional `characterSlug` owner and `tierHint`).
-- **Add a character** → append to `src/data/characters.ts` (their `perkSlugs` should reference perks that exist in the Codex).
-- **Add a meta-history flag** → add a `slug: "note"` entry to `src/data/meta-notes.ts`.
+- **Build** → append to `src/data/builds.ts` (unique `slug`, four valid `perkSlugs`, etc.; `featured: true` surfaces it on the landing page).
+- **Perk** → append to `src/data/perks.ts`.
+- **Character** → append to `src/data/characters.ts`.
+- **Meta-history flag** → add an entry to `src/data/meta-notes.ts`.
 
-The build will fail loudly if types don't line up; cross-references resolve at load time via `src/data/index.ts`.
+(Community builds, by contrast, are user-submitted and live in Postgres.)
 
 ## 🎨 Dropping in real art
 
-Art is optional — components render tasteful generated SVG placeholders by default. To use real images:
+Components render generated SVG placeholders by default. To use real images:
 
-- **Perk icon** → drop `public/images/perks/<slug>.png` and set that perk's `icon: "/images/perks/<slug>.png"` field in `perks.ts`.
-- **Character portrait** → drop `public/images/characters/<slug>.png` and set the character's `portrait` field in `characters.ts`.
+- **Perk** → drop `public/images/perks/<slug>.png` and set the perk's `icon` field in `perks.ts`.
+- **Character** → drop `public/images/characters/<slug>.png` and set the character's `portrait` field.
 
 ## 📊 How builds are rated
 
-See [`/about`](http://localhost:3000/about) in the running app. In short: **meta tier** = how strong right now; **difficulty** = how hard to pilot — kept independent on purpose. Killer tiers are approximate community estimates and shift each patch.
+See [`/about`](http://localhost:3000/about). In short: **meta tier** = how strong right now; **difficulty** = how hard to pilot — kept independent on purpose. Killer tiers are approximate community estimates that shift each patch.

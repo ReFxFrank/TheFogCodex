@@ -4,12 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Search, Command as CommandIcon } from "lucide-react";
 import { useCommandPalette } from "./command-palette";
+import { UserMenu } from "./user-menu";
 import { cn } from "@/lib/utils";
 
 const NAV = [
   { href: "/builds", label: "Builds" },
   { href: "/perks", label: "Perks" },
   { href: "/characters", label: "Characters" },
+  { href: "/community", label: "Community" },
   { href: "/about", label: "About" },
 ];
 
@@ -52,18 +54,21 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <button
-          type="button"
-          onClick={openPalette}
-          className="ml-auto inline-flex items-center gap-2 rounded-lg border border-white/10 bg-fog-800/60 px-2.5 py-2 text-sm text-ink-3 transition-colors hover:border-white/20 hover:text-ink-2"
-          aria-label="Open search (Command or Control + K)"
-        >
-          <Search className="h-4 w-4" />
-          <span className="hidden md:inline">Search the fog…</span>
-          <kbd className="hidden items-center gap-0.5 rounded border border-white/12 px-1.5 py-0.5 text-[10px] md:inline-flex">
-            <CommandIcon className="h-2.5 w-2.5" />K
-          </kbd>
-        </button>
+        <div className="ml-auto flex items-center gap-2">
+          <button
+            type="button"
+            onClick={openPalette}
+            className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-fog-800/60 px-2.5 py-2 text-sm text-ink-3 transition-colors hover:border-white/20 hover:text-ink-2"
+            aria-label="Open search (Command or Control + K)"
+          >
+            <Search className="h-4 w-4" />
+            <span className="hidden md:inline">Search the fog…</span>
+            <kbd className="hidden items-center gap-0.5 rounded border border-white/12 px-1.5 py-0.5 text-[10px] md:inline-flex">
+              <CommandIcon className="h-2.5 w-2.5" />K
+            </kbd>
+          </button>
+          <UserMenu />
+        </div>
       </div>
     </header>
   );

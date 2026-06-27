@@ -5,6 +5,7 @@ import { FogBackground } from "@/components/app/fog-background";
 import { SiteHeader } from "@/components/app/site-header";
 import { SiteFooter } from "@/components/app/site-footer";
 import { CommandPaletteProvider } from "@/components/app/command-palette";
+import { Providers } from "@/components/app/providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -57,13 +58,15 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${cinzel.variable}`}>
       <body className="antialiased">
         <FogBackground />
-        <CommandPaletteProvider>
-          <div className="relative flex min-h-dvh flex-col">
-            <SiteHeader />
-            <main className="flex-1">{children}</main>
-            <SiteFooter />
-          </div>
-        </CommandPaletteProvider>
+        <Providers>
+          <CommandPaletteProvider>
+            <div className="relative flex min-h-dvh flex-col">
+              <SiteHeader />
+              <main className="flex-1">{children}</main>
+              <SiteFooter />
+            </div>
+          </CommandPaletteProvider>
+        </Providers>
       </body>
     </html>
   );
