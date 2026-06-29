@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Role } from "@/types";
+import type { PerkCategory, Role } from "@/types";
 import { PerkIcon } from "./perk-icon";
 import { cn } from "@/lib/utils";
 
@@ -13,7 +13,13 @@ const SIZE: Record<SlotSize, { frame: string; label: string }> = {
 };
 
 interface PerkSlotProps {
-  perk?: { slug: string; name: string; role: Role; icon?: string };
+  perk?: {
+    slug: string;
+    name: string;
+    role: Role;
+    icon?: string;
+    categories?: PerkCategory[];
+  };
   /** Fallback role for an empty slot. */
   role?: Role;
   size?: SlotSize;
@@ -48,6 +54,7 @@ export function PerkSlot({
           name={perk.name}
           slug={perk.slug}
           role={perk.role}
+          categories={perk.categories}
           icon={perk.icon}
         />
       ) : (

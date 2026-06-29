@@ -1,6 +1,7 @@
 import Image from "next/image";
-import type { Role } from "@/types";
-import { hueFromString, initialsFromName } from "@/lib/placeholders";
+import type { PerkCategory, Role } from "@/types";
+import { hueFromString } from "@/lib/placeholders";
+import { glyphForCategories } from "@/lib/perk-glyph";
 import { PERK_ART } from "@/data/art-manifest";
 import { cn } from "@/lib/utils";
 
@@ -8,15 +9,25 @@ interface PerkIconProps {
   name: string;
   slug: string;
   role: Role;
+  categories?: PerkCategory[];
   icon?: string;
   className?: string;
 }
 
 /**
- * The inner emblem of a perk — a deterministic, role-tinted SVG
- * placeholder. If `icon` is set, the real asset is shown instead.
+ * The inner emblem of a perk. If real art is supplied via `icon` (or a
+ * dropped-in asset in the manifest) it's shown directly. Otherwise we draw
+ * our own role-tinted emblem: a radial-lit diamond with a category glyph
+ * (heart for healing, radar for tracking, skull for a hex, …).
  */
-export function PerkIcon({ name, slug, role, icon, className }: PerkIconProps) {
+export function PerkIcon({
+  name,
+  slug,
+  role,
+  categories,
+  icon,
+  className,
+}: PerkIconProps) {
   const src = icon ?? PERK_ART[slug];
   if (src) {
     return (
@@ -31,10 +42,12 @@ export function PerkIcon({ name, slug, role, icon, className }: PerkIconProps) {
   }
 
   const hue = hueFromString(slug);
-  const initials = initialsFromName(name);
   const accent = role === "killer" ? 354 : 190; // crimson vs teal base
   const a = `hsl(${accent}, ${role === "killer" ? 62 : 52}%, 56%)`;
   const b = `hsl(${(hue + accent) / 2}, 38%, 30%)`;
+  // Bright, legible tint for the glyph itself (lighter than the frame accent).
+  const glyphColor = `hsl(${accent}, ${role === "killer" ? 75 : 60}%, 80%)`;
+  const Glyph = glyphForCategories(categories, role);
 
   return (
     <div className={cn("relative h-full w-full", className)} aria-hidden>
@@ -64,21 +77,15 @@ export function PerkIcon({ name, slug, role, icon, className }: PerkIconProps) {
           strokeOpacity="0.4"
           strokeWidth="1.5"
         />
-        <text
-          x="50"
-          y="50"
-          dominantBaseline="central"
-          textAnchor="middle"
-          fontFamily="var(--font-cinzel), serif"
-          fontSize="30"
-          fontWeight="700"
-          fill="#f3f4f7"
-          fillOpacity="0.92"
-          style={{ letterSpacing: "0.02em" }}
-        >
-          {initials}
-        </text>
       </svg>
+      {/* category glyph, centered over the emblem */}
+      <span className="absolute inset-0 grid place-items-center">
+        <Glyph
+          className="h-[42%] w-[42%] drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]"
+          strokeWidth={1.6}
+          style={{ color: glyphColor }}
+        />
+      </span>
     </div>
   );
 }

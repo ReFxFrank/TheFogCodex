@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { HeartPulse, Skull } from "lucide-react";
 import type { Role } from "@/types";
 import { hueFromString, initialsFromName } from "@/lib/placeholders";
 import { CHARACTER_ART } from "@/data/art-manifest";
@@ -13,7 +14,11 @@ interface CharacterPortraitProps {
   rounded?: "full" | "xl";
 }
 
-/** Deterministic, role-tinted portrait placeholder (or real art if set). */
+/**
+ * Role-tinted portrait placeholder (or real art if set). The placeholder is
+ * a monogram over a radial-lit field, with a faint role watermark — a skull
+ * for killers, a pulse for survivors — so it reads as a crafted emblem.
+ */
 export function CharacterPortrait({
   name,
   slug,
@@ -38,6 +43,7 @@ export function CharacterPortrait({
   const a = `hsl(${accent}, ${role === "killer" ? 60 : 50}%, 50%)`;
   const b = `hsl(${(hue + accent) / 2}, 32%, 22%)`;
   const initials = initialsFromName(name);
+  const Watermark = role === "killer" ? Skull : HeartPulse;
 
   return (
     <span
@@ -53,6 +59,29 @@ export function CharacterPortrait({
           </radialGradient>
         </defs>
         <rect width="100" height="100" fill={`url(#cg-${slug})`} />
+        {/* inner ring */}
+        <rect
+          x="5"
+          y="5"
+          width="90"
+          height="90"
+          rx={rounded === "full" ? "45" : "12"}
+          fill="none"
+          stroke={a}
+          strokeOpacity="0.35"
+          strokeWidth="1.25"
+        />
+      </svg>
+      {/* faint role watermark behind the monogram */}
+      <span className="absolute inset-0 grid place-items-center">
+        <Watermark
+          className="h-[58%] w-[58%]"
+          strokeWidth={1.1}
+          style={{ color: a, opacity: 0.16 }}
+        />
+      </span>
+      {/* monogram — its own SVG overlay so it scales with the container */}
+      <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full">
         <text
           x="50"
           y="52"
