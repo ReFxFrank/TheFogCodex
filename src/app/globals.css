@@ -146,6 +146,39 @@
     0 20px 60px -20px rgba(0, 0, 0, 0.85);
 }
 
+/* Near-opaque surface for modals that float over page content (the command
+   palette). Kept readable even where backdrop-filter is unsupported/weak,
+   so page text can never bleed through. */
+@utility glass-modal {
+  background: rgba(16, 18, 26, 0.98);
+  backdrop-filter: blur(24px) saturate(135%);
+  -webkit-backdrop-filter: blur(24px) saturate(135%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08),
+    0 28px 80px -24px rgba(0, 0, 0, 0.9);
+}
+
+/* Command-palette backdrop. cmdk renders this element but ships no styles —
+   without a scrim the page behind the palette shows straight through it. */
+[cmdk-overlay] {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(5, 6, 10, 0.6);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: cmdk-overlay-in 160ms ease-out;
+}
+@keyframes cmdk-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* Role-accent helpers (read the dynamic --accent vars) */
 @utility text-accent {
   color: var(--accent);
@@ -393,6 +426,12 @@ html[data-fx="lite"] .glass {
 }
 html[data-fx="lite"] .glass-elevated {
   background: rgba(22, 25, 34, 0.96);
+}
+html[data-fx="lite"] .glass-modal {
+  background: rgba(15, 17, 24, 0.98);
+}
+html[data-fx="lite"] [cmdk-overlay] {
+  background: rgba(5, 6, 10, 0.82);
 }
 html[data-fx="lite"] .fog-blob {
   animation: none !important;

@@ -31,7 +31,7 @@ export function CharactersBrowser() {
 
   const results = useMemo(() => {
     let list = charactersByRole(role);
-    if (q.trim()) list = fuzzyFilter(list, q, ["name", "realName", "blurb"]);
+    if (q.trim()) list = fuzzyFilter(list, q, ["name", "realName"]);
     return [...list].sort((a, b) => {
       if (role === "killer") {
         const ta = a.killerTier ? TIER_ORDER[a.killerTier] : 5;

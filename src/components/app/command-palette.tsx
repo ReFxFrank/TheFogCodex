@@ -101,7 +101,7 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
         }}
         label="Search The Fog Codex"
         shouldFilter={false}
-        className="fixed left-1/2 top-[12vh] z-[100] w-[min(92vw,640px)] -translate-x-1/2 overflow-hidden rounded-2xl glass-elevated"
+        className="fixed left-1/2 top-[12vh] z-[100] w-[min(92vw,640px)] -translate-x-1/2 overflow-hidden rounded-2xl glass-modal"
       >
         {shuffling ? (
           <div className="flex flex-col items-center justify-center gap-4 px-6 py-16">
