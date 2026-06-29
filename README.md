@@ -134,6 +134,24 @@ docker run -p 3000:3000 --env-file .env.local fog-codex
 
 Import the repo (zero config for the app). Add a hosted Postgres (Vercel Postgres / Neon / Supabase) and set the env vars in the dashboard; run `db:migrate` against it once.
 
+## ☁️ Behind Cloudflare (caching + deploys)
+
+If you put Cloudflare in front, add a **Cache Rule** that makes the static pages edge-cacheable while bypassing the dynamic/auth routes (`/api`, `/community`, `/staff`, `/profile`, `/login`, `/register`). That serves the curated site from Cloudflare's edge for a big speed win.
+
+Because edge-cached pages stick around, **purge the cache after every deploy** so visitors get the new version. Set up the one-command flow:
+
+1. Create a Cloudflare **API token** with the *Cache Purge* permission for your zone, and grab the **Zone ID** (zone Overview → API section).
+2. Put both in `.env.local`:
+   ```
+   CF_API_TOKEN=...
+   CF_ZONE_ID=...
+   ```
+3. Deploy with a single command — pulls, installs, migrates, builds, restarts, and purges:
+   ```bash
+   npm run deploy
+   ```
+   Or just purge: `npm run cache:purge`.
+
 ---
 
 ## 🗂️ Project structure
