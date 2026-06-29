@@ -20,7 +20,7 @@ async function getTargetRole(id: string): Promise<StaffRole | null> {
   return (rows[0].role as StaffRole) ?? "user";
 }
 
-/** Change a user's staff role. Admin only; can't change your own. */
+/** Change a user's staff role. Admin+; can't change your own. */
 export async function setUserRole(
   targetId: string,
   newRole: StaffRole,
@@ -32,10 +32,13 @@ export async function setUserRole(
     return { ok: false, error: "You can't change your own role." };
   const targetRole = await getTargetRole(targetId);
   if (!targetRole) return { ok: false, error: "User not found." };
-  // Don't let an admin change a peer/superior's role (and so bypass the
-  // "can't delete another admin" rule via demote-then-delete).
+  // Can't change the role of a peer/superior (also blocks the
+  // demote-then-delete bypass of the "can't delete a peer" rule).
   if (rankOf(targetRole) >= rankOf(actor.role))
-    return { ok: false, error: "You can't change the role of another admin." };
+    return { ok: false, error: "You can't change the role of someone at or above your own rank." };
+  // Can't grant a role above your own — an admin must not be able to mint an owner.
+  if (rankOf(newRole) > rankOf(actor.role))
+    return { ok: false, error: "You can't grant a role above your own." };
 
   await db.update(users).set({ role: newRole }).where(eq(users.id, targetId));
   revalidatePath("/staff/users");
@@ -83,7 +86,7 @@ export async function deleteCommentAsStaff(commentId: string): Promise<Result> {
   return { ok: true };
 }
 
-/** Delete a user account (cascades their builds/comments). Admin only. */
+/** Delete a user account (cascades their builds/comments). Admin+. */
 export async function deleteUserAsStaff(targetId: string): Promise<Result> {
   const actor = await requireStaff("admin");
   if (!actor) return { ok: false, error: "Admin access required." };
@@ -91,8 +94,10 @@ export async function deleteUserAsStaff(targetId: string): Promise<Result> {
     return { ok: false, error: "You can't delete your own account from here." };
   const targetRole = await getTargetRole(targetId);
   if (!targetRole) return { ok: false, error: "User not found." };
-  if (rankOf(targetRole) >= rankOf("admin"))
-    return { ok: false, error: "You can't delete another admin." };
+  // Only someone strictly above the target may delete them — so admins can't
+  // delete admins/owners, but an owner can remove an admin.
+  if (rankOf(targetRole) >= rankOf(actor.role))
+    return { ok: false, error: "You can't delete someone at or above your own rank." };
 
   await db.delete(users).where(eq(users.id, targetId));
   revalidatePath("/staff/users");

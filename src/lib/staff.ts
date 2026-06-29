@@ -83,7 +83,7 @@ export async function listUsers(): Promise<StaffUserRow[]> {
   const bMap = new Map(buildCounts.map((x) => [x.authorId, Number(x.n)]));
   const cMap = new Map(commentCounts.map((x) => [x.userId, Number(x.n)]));
 
-  const RANK: Record<string, number> = { admin: 0, moderator: 1, user: 2 };
+  const RANK: Record<string, number> = { owner: 0, admin: 1, moderator: 2, user: 3 };
   return rows
     .map((u) => ({
       ...u,

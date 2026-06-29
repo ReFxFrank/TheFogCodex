@@ -22,10 +22,14 @@ import type { StaffRole } from "@/types";
 // each session lookup.
 // ============================================================
 
-const adminEmails = (process.env.STAFF_ADMIN_EMAILS ?? "")
-  .split(",")
-  .map((s) => s.trim().toLowerCase())
-  .filter(Boolean);
+function emailList(raw: string | undefined): string[] {
+  return (raw ?? "")
+    .split(",")
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+}
+const ownerEmails = emailList(process.env.STAFF_OWNER_EMAILS);
+const adminEmails = emailList(process.env.STAFF_ADMIN_EMAILS);
 
 const oauthProviders = [
   ...(process.env.AUTH_GITHUB_ID ? [GitHub] : []),
@@ -125,14 +129,21 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   events: {
     async signIn({ user, account }) {
-      // Bootstrap admins listed in STAFF_ADMIN_EMAILS — but ONLY for a
-      // verified OAuth identity. Email/password accounts have no email
-      // verification, so a self-asserted address must never grant admin
-      // (otherwise anyone could register a listed email and seize it).
+      // Bootstrap staff listed in STAFF_OWNER_EMAILS / STAFF_ADMIN_EMAILS —
+      // but ONLY for a verified OAuth identity. Email/password accounts have
+      // no email verification, so a self-asserted address must never grant
+      // staff (otherwise anyone could register a listed email and seize it).
       if (account?.provider === "credentials") return;
-      if (user?.id && user.email && adminEmails.includes(user.email.toLowerCase())) {
+      if (!user?.id || !user.email) return;
+      const email = user.email.toLowerCase();
+      const role = ownerEmails.includes(email)
+        ? "owner"
+        : adminEmails.includes(email)
+          ? "admin"
+          : null;
+      if (role) {
         try {
-          await db.update(users).set({ role: "admin" }).where(eq(users.id, user.id));
+          await db.update(users).set({ role }).where(eq(users.id, user.id));
         } catch {
           /* non-fatal */
         }

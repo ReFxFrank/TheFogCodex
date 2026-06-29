@@ -8,7 +8,7 @@ import {
   setUserBanned,
   deleteUserAsStaff,
 } from "@/app/actions/staff";
-import { rankOf, ROLE_LABEL } from "@/lib/permissions";
+import { isAdmin, rankOf, ROLE_LABEL } from "@/lib/permissions";
 import { STAFF_ROLES, type StaffRole } from "@/types";
 import type { StaffUserRow as Row } from "@/lib/staff";
 import { AuthorChip } from "./author-chip";
@@ -20,6 +20,7 @@ interface Props {
 }
 
 const ROLE_COLOR: Record<StaffRole, string> = {
+  owner: "border-accent/50 bg-accent-soft text-accent-bright",
   admin: "border-gold/40 bg-gold/10 text-gold",
   moderator: "border-tier-b/40 bg-tier-b/10 text-tier-b",
   user: "border-white/10 text-ink-3",
@@ -32,7 +33,10 @@ export function StaffUserRow({ user, actorId, actorRole }: Props) {
 
   const isSelf = user.id === actorId;
   const canManage = !isSelf && rankOf(user.role) < rankOf(actorRole);
-  const isAdminActor = actorRole === "admin";
+  // Admins and owners can change roles / delete; owners can also act on admins.
+  const canChangeRoles = isAdmin(actorRole);
+  // Only offer roles at or below the actor's own rank (no minting a superior).
+  const grantableRoles = STAFF_ROLES.filter((r) => rankOf(r) <= rankOf(actorRole));
 
   function run(fn: () => Promise<{ ok: boolean; error?: string }>) {
     setError(null);
@@ -80,7 +84,7 @@ export function StaffUserRow({ user, actorId, actorRole }: Props) {
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
-        {isAdminActor && !isSelf ? (
+        {canChangeRoles && canManage ? (
           <select
             value={user.role}
             disabled={pending}
@@ -88,7 +92,7 @@ export function StaffUserRow({ user, actorId, actorRole }: Props) {
             aria-label={`Role for ${user.name ?? user.email}`}
             className="rounded-lg border border-white/10 bg-fog-800/60 px-2 py-1.5 text-xs text-ink outline-none focus-visible:border-accent"
           >
-            {STAFF_ROLES.map((r) => (
+            {grantableRoles.map((r) => (
               <option key={r} value={r} className="bg-fog-800">
                 {ROLE_LABEL[r]}
               </option>
@@ -112,7 +116,7 @@ export function StaffUserRow({ user, actorId, actorRole }: Props) {
           </button>
         )}
 
-        {isAdminActor && canManage && (
+        {canChangeRoles && canManage && (
           <button
             type="button"
             onClick={onDelete}
