@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Skull } from "lucide-react";
 import { enabledProviders } from "@/auth";
+import { safeCallbackPath } from "@/lib/utils";
 import { LoginButtons } from "@/components/app/login-buttons";
 import { CredentialsForm } from "@/components/app/credentials-form";
 
@@ -18,8 +19,7 @@ export default async function LoginPage({
   searchParams: Promise<{ callbackUrl?: string }>;
 }) {
   const { callbackUrl } = await searchParams;
-  const safeCallback =
-    callbackUrl && callbackUrl.startsWith("/") ? callbackUrl : "/community";
+  const safeCallback = safeCallbackPath(callbackUrl);
   const hasOAuth = enabledProviders.github || enabledProviders.google;
 
   return (

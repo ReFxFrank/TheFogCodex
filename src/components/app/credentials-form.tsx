@@ -6,6 +6,7 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { Mail } from "lucide-react";
 import { registerUser } from "@/app/actions/auth";
+import { safeCallbackPath } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 interface CredentialsFormProps {
@@ -44,7 +45,7 @@ export function CredentialsForm({ mode, callbackUrl }: CredentialsFormProps) {
         );
         return;
       }
-      router.push(callbackUrl);
+      router.push(safeCallbackPath(callbackUrl));
       router.refresh();
     });
   }

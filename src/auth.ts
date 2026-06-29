@@ -7,6 +7,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { users, accounts, sessions, verificationTokens } from "@/db/schema";
 import { verifyPassword } from "@/lib/password";
+import { clientIp, rateLimit } from "@/lib/rate-limit";
 import type { StaffRole } from "@/types";
 
 // ============================================================
@@ -50,6 +51,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(creds) {
+        // Throttle credentials sign-in attempts per IP to blunt brute force.
+        const ip = await clientIp();
+        if (!rateLimit(`login:${ip}`, 12, 60_000)) return null;
+
         const email = String(creds?.email ?? "").trim().toLowerCase();
         const password = String(creds?.password ?? "");
         if (!email || !password) return null;
@@ -109,16 +114,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           session.user.image = u.image ?? session.user.image;
         }
       } catch {
+        // Fail closed: if we can't re-check the user, drop privileges and
+        // treat them as banned for this request rather than granting access.
         session.user.id = token.sub;
         session.user.role = "user";
-        session.user.banned = false;
+        session.user.banned = true;
       }
       return session;
     },
   },
   events: {
-    async signIn({ user }) {
-      // Bootstrap admins listed in STAFF_ADMIN_EMAILS.
+    async signIn({ user, account }) {
+      // Bootstrap admins listed in STAFF_ADMIN_EMAILS — but ONLY for a
+      // verified OAuth identity. Email/password accounts have no email
+      // verification, so a self-asserted address must never grant admin
+      // (otherwise anyone could register a listed email and seize it).
+      if (account?.provider === "credentials") return;
       if (user?.id && user.email && adminEmails.includes(user.email.toLowerCase())) {
         try {
           await db.update(users).set({ role: "admin" }).where(eq(users.id, user.id));

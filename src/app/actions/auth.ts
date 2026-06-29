@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { hashPassword } from "@/lib/password";
+import { clientIp, rateLimit } from "@/lib/rate-limit";
 
 export type RegisterResult = { ok: true } | { ok: false; error: string };
 
@@ -14,6 +15,11 @@ export async function registerUser(input: {
   email: string;
   password: string;
 }): Promise<RegisterResult> {
+  // Cap account creation per IP to stop scripted signup floods.
+  const ip = await clientIp();
+  if (!rateLimit(`register:${ip}`, 6, 60 * 60_000))
+    return { ok: false, error: "Too many sign-up attempts. Try again later." };
+
   const name = input.name?.trim() ?? "";
   const email = input.email?.trim().toLowerCase() ?? "";
   const password = input.password ?? "";

@@ -6,6 +6,7 @@ import { auth } from "@/auth";
 import { db } from "@/db";
 import { communityBuilds, comments, ratings } from "@/db/schema";
 import { perkBySlug, characterBySlug } from "@/data";
+import { clientIp, rateLimit } from "@/lib/rate-limit";
 import { ROLES, DIFFICULTY, ARCHETYPES, type Role } from "@/types";
 
 export interface PublishInput {
@@ -27,6 +28,10 @@ export async function publishBuild(input: PublishInput): Promise<ActionResult> {
   const session = await auth();
   if (!session?.user?.id) return { ok: false, error: "You must be signed in to publish a build." };
   if (session.user.banned) return { ok: false, error: "Your account is suspended." };
+
+  // Throttle publishing per user to keep the feed from being flooded.
+  if (!rateLimit(`publish:${session.user.id}`, 10, 60 * 60_000))
+    return { ok: false, error: "You're publishing too fast. Take a breather and try again." };
 
   const title = input.title?.trim() ?? "";
   const summary = input.summary?.trim() ?? "";
@@ -116,6 +121,11 @@ export async function addComment(
   const session = await auth();
   if (!session?.user?.id) return { ok: false, error: "Sign in to comment." };
   if (session.user.banned) return { ok: false, error: "Your account is suspended." };
+
+  // Throttle comments per user to blunt spam.
+  if (!rateLimit(`comment:${session.user.id}`, 20, 5 * 60_000))
+    return { ok: false, error: "You're commenting too fast. Slow down a moment." };
+
   const text = body?.trim() ?? "";
   if (text.length < 1) return { ok: false, error: "Comment can't be empty." };
   if (text.length > 1000) return { ok: false, error: "Comment is too long (1000 max)." };

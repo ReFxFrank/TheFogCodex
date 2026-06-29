@@ -32,6 +32,10 @@ export async function setUserRole(
     return { ok: false, error: "You can't change your own role." };
   const targetRole = await getTargetRole(targetId);
   if (!targetRole) return { ok: false, error: "User not found." };
+  // Don't let an admin change a peer/superior's role (and so bypass the
+  // "can't delete another admin" rule via demote-then-delete).
+  if (rankOf(targetRole) >= rankOf(actor.role))
+    return { ok: false, error: "You can't change the role of another admin." };
 
   await db.update(users).set({ role: newRole }).where(eq(users.id, targetId));
   revalidatePath("/staff/users");

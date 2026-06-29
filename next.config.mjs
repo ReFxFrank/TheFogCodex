@@ -9,6 +9,26 @@ const nextConfig = {
     // No remote patterns needed for the fan-resource build.
     formats: ["image/avif", "image/webp"],
   },
+  // Baseline security headers on every response. We intentionally skip a strict
+  // Content-Security-Policy: the no-FOUC effects toggle runs as an inline
+  // <script>, and a nonce-less CSP would block it. The headers below are the
+  // high-value, low-risk wins (clickjacking, MIME sniffing, referrer leakage).
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
