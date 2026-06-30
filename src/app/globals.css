@@ -278,10 +278,22 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* Fixed, non-composited wrapper for the drifting blobs. Keeping the
+   position:fixed element free of transform/will-change avoids a Chromium bug
+   where a fixed, transform-composited layer offsets page hit-testing (hover and
+   clicks) by the scroll distance. The animated transforms live on the absolute
+   children below instead. */
+.fog-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
 /* Drifting fog blobs */
 .fog-blob {
-  position: fixed;
-  z-index: -1;
+  position: absolute;
   pointer-events: none;
   border-radius: 9999px;
   filter: blur(60px);
