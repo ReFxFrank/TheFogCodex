@@ -81,6 +81,29 @@ npm run db:migrate    # apply pending migrations (uses DATABASE_URL)
 npm run db:studio     # optional: browse the DB in Drizzle Studio
 ```
 
+### 💾 Backups
+
+Accounts, community builds, ratings and comments live only in Postgres — back them up.
+
+```bash
+npm run db:backup     # timestamped, gzipped dump into ./backups (prunes >7 days)
+```
+
+Schedule a nightly backup with cron (`crontab -e`):
+
+```cron
+# 3:30am daily — adjust the path to your checkout
+30 3 * * * cd /srv/fog-codex && /usr/bin/npm run db:backup >> /var/log/fogcodex-backup.log 2>&1
+```
+
+Tune with `BACKUP_DIR` and `BACKUP_KEEP_DAYS`. **Restore** a dump with:
+
+```bash
+gunzip -c backups/fogcodex-YYYYMMDD-HHMMSS.sql.gz | psql "$DATABASE_URL"
+```
+
+For real safety, copy the dumps off the box (another host, S3/R2, etc.) — a backup on the same disk doesn't survive a disk failure.
+
 ## 📦 Production on Ubuntu
 
 Requires **Node.js ≥ 18.18** (Node 20 LTS recommended — see `.nvmrc`) and a reachable Postgres.
