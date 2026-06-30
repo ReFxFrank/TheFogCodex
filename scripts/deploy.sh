@@ -4,8 +4,12 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-echo "==> Pulling latest code"
-git pull
+echo "==> Fetching latest code"
+git fetch origin
+# Hard-reset to origin/main so local churn (e.g. npm rewriting package-lock.json)
+# never blocks the update. .env.local, /backups and dropped-in art under
+# public/images are gitignored, so they survive the reset.
+git reset --hard origin/main
 
 echo "==> Installing dependencies"
 npm install
