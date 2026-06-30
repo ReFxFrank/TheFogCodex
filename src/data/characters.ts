@@ -19,7 +19,7 @@ export const CHARACTERS: Character[] = [
     name: "Dwight Fairfield",
     role: "survivor",
     archetypeTags: ["support", "team"],
-    perkSlugs: ["prove-thyself", "bond"],
+    perkSlugs: ["bond", "prove-thyself", "leader"],
     blurb:
       "A nervous born-again leader who survives by keeping the team together. His perks pull the group onto gens and into safety.",
   },
@@ -37,7 +37,7 @@ export const CHARACTERS: Character[] = [
     name: "Jake Park",
     role: "survivor",
     archetypeTags: ["stealth", "saboteur"],
-    perkSlugs: ["iron-will"],
+    perkSlugs: ["iron-will", "calm-spirit", "saboteur"],
     blurb:
       "An off-grid survivalist who thrives alone in the fog, slipping chases in total silence.",
   },
@@ -57,7 +57,7 @@ export const CHARACTERS: Character[] = [
     role: "survivor",
     licensed: true,
     archetypeTags: ["anti-tunnel", "looper"],
-    perkSlugs: ["decisive-strike"],
+    perkSlugs: ["sole-survivor", "object-of-obsession", "decisive-strike"],
     blurb:
       "The final girl who has stared down a relentless killer and lived. She punishes anyone who fixates on her.",
   },
@@ -68,7 +68,7 @@ export const CHARACTERS: Character[] = [
     role: "survivor",
     licensed: true,
     archetypeTags: ["anti-slug", "support"],
-    perkSlugs: ["unbreakable", "borrowed-time"],
+    perkSlugs: ["left-behind", "borrowed-time", "unbreakable"],
     blurb:
       "A grizzled Vietnam veteran who refuses to stay down — and refuses to leave anyone behind on the ground.",
   },
@@ -77,7 +77,7 @@ export const CHARACTERS: Character[] = [
     name: "Feng Min",
     role: "survivor",
     archetypeTags: ["looper", "athletic"],
-    perkSlugs: ["lithe"],
+    perkSlugs: ["technician", "lithe", "alert"],
     blurb:
       "A burnt-out esports prodigy who reads loops like a match replay and resets the chase with a flick.",
   },
@@ -86,7 +86,7 @@ export const CHARACTERS: Character[] = [
     name: "Kate Denson",
     role: "survivor",
     archetypeTags: ["looper", "stealth"],
-    perkSlugs: ["windows-of-opportunity", "dance-with-me"],
+    perkSlugs: ["windows-of-opportunity", "dance-with-me", "boil-over"],
     blurb:
       "A travelling musician with an easy charm and an instinct for the next pallet. Her perks teach the geometry of a chase.",
   },
@@ -97,7 +97,7 @@ export const CHARACTERS: Character[] = [
     role: "survivor",
     licensed: true,
     archetypeTags: ["gen-repair", "investigator"],
-    perkSlugs: ["stake-out"],
+    perkSlugs: ["detectives-hunch", "stake-out", "tenacity"],
     blurb:
       "An obsessive detective who never closed his last case. He works the trial like a crime scene — methodical, precise.",
   },
@@ -106,7 +106,7 @@ export const CHARACTERS: Character[] = [
     name: "Zarina Kassir",
     role: "survivor",
     archetypeTags: ["anti-tunnel", "stealth"],
-    perkSlugs: ["off-the-record"],
+    perkSlugs: ["off-the-record", "red-herring", "for-the-people"],
     blurb:
       "A documentary filmmaker who turns the Entity's lens back on the Killer, slipping the spotlight right after a hook.",
   },
@@ -115,7 +115,7 @@ export const CHARACTERS: Character[] = [
     name: "David King",
     role: "survivor",
     archetypeTags: ["anti-tunnel", "bodyblock"],
-    perkSlugs: ["dead-hard"],
+    perkSlugs: ["dead-hard", "no-mither", "were-gonna-live-forever"],
     blurb:
       "A bare-knuckle brawler who lives for the fight, eating a hit so a teammate can run.",
   },
@@ -126,7 +126,7 @@ export const CHARACTERS: Character[] = [
     role: "survivor",
     licensed: true,
     archetypeTags: ["self-sufficient", "stealth"],
-    perkSlugs: ["inner-strength"],
+    perkSlugs: ["better-together", "fixated", "inner-strength"],
     blurb:
       "A sharp young journalist from Hawkins who pieces together the rules of any nightmare and heals on her own terms.",
   },
@@ -135,7 +135,7 @@ export const CHARACTERS: Character[] = [
     name: "Felix Richter",
     role: "survivor",
     archetypeTags: ["gen-repair", "support"],
-    perkSlugs: ["built-to-last"],
+    perkSlugs: ["visionary", "desperate-measures", "built-to-last"],
     blurb:
       "An architect who treats the trial as an engineering problem, making one good item last the entire match.",
   },
@@ -144,7 +144,7 @@ export const CHARACTERS: Character[] = [
     name: "Mikaela Reid",
     role: "survivor",
     archetypeTags: ["boon", "support"],
-    perkSlugs: ["circle-of-healing", "shadow-step"],
+    perkSlugs: ["clairvoyance", "circle-of-healing", "shadow-step"],
     blurb:
       "A practising witch who blesses the Killer's own totems, turning hexed ground into a sanctuary of healing and cover.",
   },
@@ -153,7 +153,7 @@ export const CHARACTERS: Character[] = [
     name: "Jonah Vasquez",
     role: "survivor",
     archetypeTags: ["boon", "anti-slug"],
-    perkSlugs: ["exponential"],
+    perkSlugs: ["overcome", "corrective-action", "exponential"],
     blurb:
       "A CIA cryptanalyst who finds the pattern in everything — including how to get a slugged teammate back on their feet.",
   },
@@ -173,7 +173,7 @@ export const CHARACTERS: Character[] = [
     role: "survivor",
     licensed: true,
     archetypeTags: ["support", "endurance"],
-    perkSlugs: ["vigil"],
+    perkSlugs: ["wake-up", "pharmacy", "vigil"],
     blurb:
       "An exhausted teenager fighting to stay awake, squeezing every last second of stamina out of himself and the team around him.",
   },
@@ -183,7 +183,7 @@ export const CHARACTERS: Character[] = [
     realName: "Shane Wiigwaas",
     role: "survivor",
     archetypeTags: ["support", "newcomer"],
-    perkSlugs: [],
+    perkSlugs: ["wide-open-throttle", "lend-a-hand", "cross-examination"],
     blurb:
       "The newest face to wake in the fog (Chapter 40.5). His teachable perks are still being charted by the community.",
   },
@@ -207,7 +207,7 @@ export const CHARACTERS: Character[] = [
     role: "killer",
     killerTier: "S",
     archetypeTags: ["mobility", "anti-loop", "rush"],
-    perkSlugs: ["hex-undying"],
+    perkSlugs: ["dragons-grip", "hex-blood-favour", "hex-undying"],
     blurb:
       "An alchemist mutated by his own serum, ricocheting off walls in violent rushes. Map pressure and lethality in one body.",
   },
@@ -229,7 +229,7 @@ export const CHARACTERS: Character[] = [
     role: "killer",
     killerTier: "S",
     archetypeTags: ["phase", "anti-loop", "tracking"],
-    perkSlugs: ["spirit-fury"],
+    perkSlugs: ["spirit-fury", "hex-haunted-ground", "rancor"],
     blurb:
       "A vengeful phantom who phases out of sight and hunts by sound alone. Few chases are more disorienting to be on the wrong end of.",
   },
@@ -240,7 +240,7 @@ export const CHARACTERS: Character[] = [
     role: "killer",
     killerTier: "A",
     archetypeTags: ["ranged", "zoning", "hatchets"],
-    perkSlugs: [],
+    perkSlugs: ["beast-of-prey", "territorial-imperative", "hex-huntress-lullaby"],
     blurb:
       "A lullaby-humming hunter raised by the woods, hurling hatchets across the map to end a loop before it begins.",
   },
@@ -263,7 +263,7 @@ export const CHARACTERS: Character[] = [
     licensed: true,
     killerTier: "A",
     archetypeTags: ["mobility", "anti-loop", "infection"],
-    perkSlugs: [],
+    perkSlugs: ["superior-anatomy", "awakened-awareness", "terminus"],
     blurb:
       "A viral overlord who bounds across the arena and slams Survivors into walls, spreading an infection as he goes.",
   },
@@ -275,7 +275,7 @@ export const CHARACTERS: Character[] = [
     licensed: true,
     killerTier: "A",
     archetypeTags: ["stealth", "anti-loop", "small"],
-    perkSlugs: [],
+    perkSlugs: ["hex-two-can-play", "friends-til-the-end", "batteries-included"],
     blurb:
       "A pint-sized killer doll who scuttles below sightlines and strikes from a dash. Tiny, fast, and impossible to see coming.",
   },
@@ -286,7 +286,7 @@ export const CHARACTERS: Character[] = [
     role: "killer",
     killerTier: "A",
     archetypeTags: ["snowball", "instadown", "mobility"],
-    perkSlugs: [],
+    perkSlugs: ["blood-echo", "nemesis", "zanshin-tactics"],
     blurb:
       "A wrathful samurai who collects spilled blood until he ignites into an unstoppable demon rush. Pure snowball potential.",
   },
@@ -298,7 +298,7 @@ export const CHARACTERS: Character[] = [
     licensed: true,
     killerTier: "A",
     archetypeTags: ["mobility", "anti-loop", "high-skill"],
-    perkSlugs: [],
+    perkSlugs: ["hex-nothing-but-misery", "forever-entwined", "none-are-free"],
     blurb:
       "A half-ghoul torn between humanity and hunger, vaulting and lunging with kagune in a relentless high-mobility chase.",
   },
@@ -310,7 +310,7 @@ export const CHARACTERS: Character[] = [
     licensed: true,
     killerTier: "A",
     archetypeTags: ["stealth", "ambush", "map-control"],
-    perkSlugs: [],
+    perkSlugs: ["help-wanted", "phantom-fear", "haywire"],
     blurb:
       "A decaying spring-lock suit housing a child murderer, lurking through vents and shadows to ambush from anywhere on the map.",
   },
@@ -333,7 +333,7 @@ export const CHARACTERS: Character[] = [
     licensed: true,
     killerTier: "B",
     archetypeTags: ["ranged", "summoner", "map-control"],
-    perkSlugs: ["deadlock"],
+    perkSlugs: ["deadlock", "hex-plaything", "scourge-hook-gift-of-pain"],
     blurb:
       "A priest of pleasure and pain who binds Survivors in chains from across the map and weaponizes a cursed puzzle box.",
   },
@@ -355,7 +355,7 @@ export const CHARACTERS: Character[] = [
     role: "killer",
     killerTier: "B",
     archetypeTags: ["snowball", "zoning", "anti-heal"],
-    perkSlugs: ["dead-mans-switch", "coup-de-grace"],
+    perkSlugs: ["coup-de-grace", "hoarder", "oppression"],
     blurb:
       "Conjoined siblings who split apart to hunt — tiny Victor pins a Survivor while Charlotte closes in. A slugging snowball.",
   },
@@ -367,7 +367,7 @@ export const CHARACTERS: Character[] = [
     licensed: true,
     killerTier: "C",
     archetypeTags: ["ranged", "anti-loop", "infection"],
-    perkSlugs: ["lethal-pursuer", "eruption"],
+    perkSlugs: ["lethal-pursuer", "hysteria", "eruption"],
     blurb:
       "A towering bioweapon with a whipping tentacle and zombie minions, breaking loops from a distance and spreading contamination.",
   },
@@ -378,7 +378,7 @@ export const CHARACTERS: Character[] = [
     role: "killer",
     killerTier: "B",
     archetypeTags: ["summoner", "zoning", "map-control"],
-    perkSlugs: ["nowhere-to-hide"],
+    perkSlugs: ["nowhere-to-hide", "hex-face-the-darkness", "hubris"],
     blurb:
       "A cursed mercenary who summons spectral guards to patrol, zone, and corner Survivors while he closes the trap.",
   },
@@ -390,7 +390,7 @@ export const CHARACTERS: Character[] = [
     licensed: true,
     killerTier: "C",
     archetypeTags: ["instadown", "anti-loop", "chainsaw"],
-    perkSlugs: ["bbq-and-chili"],
+    perkSlugs: ["bbq-and-chili", "franklins-demise", "knock-out"],
     blurb:
       "A chainsaw-wielding family man who turns a cluster of Survivors into a multi-down massacre at the right pallet.",
   },
@@ -400,7 +400,7 @@ export const CHARACTERS: Character[] = [
     role: "killer",
     killerTier: "B",
     archetypeTags: ["stealth", "teleport", "ambush"],
-    perkSlugs: ["darkness-revealed"],
+    perkSlugs: ["darkness-revealed", "dissolution", "septic-touch"],
     blurb:
       "A writhing mass of forgotten guilt that teleports between lockers and drowns the map in darkness. The fog's jump-scare incarnate.",
   },
@@ -411,7 +411,7 @@ export const CHARACTERS: Character[] = [
     role: "killer",
     killerTier: "C",
     archetypeTags: ["traps", "ambush", "map-control"],
-    perkSlugs: ["hex-ruin", "devour-hope"],
+    perkSlugs: ["hex-the-third-seal", "hex-ruin", "devour-hope"],
     blurb:
       "A swamp-cursed victim turned predator, scrawling phantom traps in the mud and teleporting to ambush anyone who trips them.",
   },
@@ -422,7 +422,7 @@ export const CHARACTERS: Character[] = [
     role: "killer",
     killerTier: "B",
     archetypeTags: ["ranged", "zoning", "snowball"],
-    perkSlugs: ["no-way-out", "starstruck"],
+    perkSlugs: ["starstruck", "hex-crowd-control", "no-way-out"],
     blurb:
       "A murderous pop idol who turns a chase into a knife-throwing performance, peppering Survivors from range until they drop.",
   },
@@ -434,7 +434,7 @@ export const CHARACTERS: Character[] = [
     licensed: true,
     killerTier: "B",
     archetypeTags: ["ranged", "anti-heal", "zoning"],
-    perkSlugs: ["trail-of-torment"],
+    perkSlugs: ["forced-penance", "trail-of-torment", "deathbound"],
     blurb:
       "The judge and punisher of Silent Hill, dragging his great blade to carve trenches of torment across the ground.",
   },
@@ -445,7 +445,7 @@ export const CHARACTERS: Character[] = [
     role: "killer",
     killerTier: "C",
     archetypeTags: ["tracking", "anti-stealth", "area"],
-    perkSlugs: ["monitor-and-abuse"],
+    perkSlugs: ["overwhelming-presence", "monitor-and-abuse", "overcharge"],
     blurb:
       "A sadistic electroshock therapist who floods the map with madness, ripping Survivors out of stealth with screams.",
   },
@@ -457,7 +457,7 @@ export const CHARACTERS: Character[] = [
     licensed: true,
     killerTier: "B",
     archetypeTags: ["stalker", "instadown", "relentless"],
-    perkSlugs: [],
+    perkSlugs: ["hex-scared-to-death", "silent-shadow", "rampage"],
     blurb:
       "The newest nightmare to step through the fog — an unkillable, unhurried slasher who simply does not stop coming.",
   },
