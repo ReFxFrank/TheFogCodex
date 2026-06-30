@@ -56,6 +56,15 @@ export function SiteFooter() {
             <Link href="/about" className="text-ink-2 transition-colors hover:text-ink">
               About
             </Link>
+            <Link href="/guidelines" className="text-ink-2 transition-colors hover:text-ink">
+              Guidelines
+            </Link>
+            <Link href="/privacy" className="text-ink-2 transition-colors hover:text-ink">
+              Privacy
+            </Link>
+            <Link href="/terms" className="text-ink-2 transition-colors hover:text-ink">
+              Terms
+            </Link>
           </nav>
         </div>
 
