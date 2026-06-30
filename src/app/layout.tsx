@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/app/site-footer";
 import { CommandPaletteProvider } from "@/components/app/command-palette";
 import { Providers } from "@/components/app/providers";
 import { fxInitScript } from "@/components/app/effects-toggle";
+import { SITE_URL } from "@/lib/site";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,16 +27,19 @@ const SITE_DESC =
   "Dead by Daylight builds worth actually running, for survivor and killer. See the real loadout, what it's good at, and where it falls apart. Plus a perk reference that explains what everything does. Made by a fan.";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: `${SITE_NAME} — Dead by Daylight Builds & Perk Knowledgebase`,
     template: `%s · ${SITE_NAME}`,
   },
   description: SITE_DESC,
   applicationName: SITE_NAME,
+  alternates: { canonical: "/" },
   keywords: [
     "Dead by Daylight",
     "DBD builds",
     "DBD perks",
+    "DBD maps",
     "killer builds",
     "survivor builds",
     "perk knowledgebase",
@@ -43,7 +47,31 @@ export const metadata: Metadata = {
   openGraph: {
     title: SITE_NAME,
     description: SITE_DESC,
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SITE_DESC,
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+  description: SITE_DESC,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${SITE_URL}/perks?q={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
   },
 };
 
@@ -58,6 +86,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${cinzel.variable}`}>
       <body className="antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <script dangerouslySetInnerHTML={{ __html: fxInitScript }} />
         <FogBackground />
         <Providers>
