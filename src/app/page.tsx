@@ -147,6 +147,33 @@ export default function Home() {
           </Link>
         ))}
       </section>
+
+      {/* ---------------- Closing note ---------------- */}
+      <section className="mx-auto mt-20 max-w-2xl border-t border-white/8 pb-6 pt-10 text-center">
+        <p className="text-sm leading-relaxed text-ink-3">
+          What you&apos;re looking at: a Dead by Daylight reference that&apos;s
+          actually quick to use. There are{" "}
+          <Link href="/builds" className="text-accent hover:underline">
+            builds
+          </Link>{" "}
+          for both survivor and killer, each shown as the real loadout with an honest
+          tier and the matchups it hates — not a randomizer, not a spreadsheet, not a
+          “this one&apos;s broken” headline. From there you can dig into{" "}
+          <Link href="/perks" className="text-accent hover:underline">
+            every perk
+          </Link>
+          , the{" "}
+          <Link href="/characters" className="text-accent hover:underline">
+            whole roster
+          </Link>
+          , and a{" "}
+          <Link href="/maps" className="text-accent hover:underline">
+            map guide
+          </Link>{" "}
+          that tells you which side each one tends to favour. Made by a fan, kept
+          current with the patch.
+        </p>
+      </section>
     </div>
   );
 }
