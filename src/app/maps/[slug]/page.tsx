@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { BreadcrumbJsonLd } from "@/components/app/breadcrumb-jsonld";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowLeft, BadgeCheck, MapPin, Maximize, Eye } from "lucide-react";
@@ -47,6 +48,13 @@ export default async function MapDetailPage({
 
   return (
     <div data-role={leanRole(map.lean)} className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Maps", path: "/maps" },
+          { name: map.name, path: `/maps/${map.slug}` },
+        ]}
+      />
       <Link
         href="/maps"
         className="inline-flex items-center gap-1.5 text-sm text-ink-3 transition-colors hover:text-ink"

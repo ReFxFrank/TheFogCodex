@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { BreadcrumbJsonLd } from "@/components/app/breadcrumb-jsonld";
 import {
   ArrowRight,
   ArrowLeft,
@@ -66,6 +67,13 @@ export default async function BuildDetailPage({
 
   return (
     <div data-role={build.role} className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Builds", path: "/builds" },
+          { name: build.title, path: `/builds/${build.slug}` },
+        ]}
+      />
       <Link
         href={`/builds?role=${build.role}`}
         className="inline-flex items-center gap-1.5 text-sm text-ink-3 transition-colors hover:text-ink"

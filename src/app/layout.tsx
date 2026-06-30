@@ -57,6 +57,14 @@ export const metadata: Metadata = {
     title: SITE_NAME,
     description: SITE_DESC,
   },
+  // Search-engine ownership verification. Paste the codes into .env.local and
+  // rebuild; if a value is unset, its meta tag is simply omitted.
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+    other: process.env.BING_SITE_VERIFICATION
+      ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION }
+      : undefined,
+  },
 };
 
 const jsonLd = {

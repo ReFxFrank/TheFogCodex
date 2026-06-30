@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { BreadcrumbJsonLd } from "@/components/app/breadcrumb-jsonld";
 import { ArrowLeft, Flag, LayoutGrid } from "lucide-react";
 import {
   perks,
@@ -46,6 +47,13 @@ export default async function PerkDetailPage({
 
   return (
     <div data-role={perk.role} className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Perks", path: "/perks" },
+          { name: perk.name, path: `/perks/${perk.slug}` },
+        ]}
+      />
       <Link
         href={`/perks?role=${perk.role}`}
         className="inline-flex items-center gap-1.5 text-sm text-ink-3 transition-colors hover:text-ink"

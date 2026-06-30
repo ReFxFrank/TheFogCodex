@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { BreadcrumbJsonLd } from "@/components/app/breadcrumb-jsonld";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { ArrowLeft, BadgeCheck, ArrowRight } from "lucide-react";
@@ -43,6 +44,13 @@ export default async function CharacterDetailPage({
 
   return (
     <div data-role={character.role} className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Characters", path: "/characters" },
+          { name: character.name, path: `/characters/${character.slug}` },
+        ]}
+      />
       <Link
         href={`/characters?role=${character.role}`}
         className="inline-flex items-center gap-1.5 text-sm text-ink-3 transition-colors hover:text-ink"
