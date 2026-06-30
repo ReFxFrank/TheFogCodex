@@ -8,6 +8,7 @@ import { titleCase } from "@/lib/utils";
 import { MapEmblem } from "@/components/app/map-emblem";
 import { MapCard } from "@/components/app/map-card";
 import { leanRole } from "@/components/app/map-card";
+import { MapStrategySection } from "@/components/app/map-strategy-section";
 import type { MapLean } from "@/types";
 
 export function generateStaticParams() {
@@ -132,6 +133,9 @@ export default async function MapDetailPage({
           reworked or the meta moves — treat them as a guide, not a verdict.
         </p>
       </section>
+
+      {/* How to approach it — recommended killers + perks */}
+      <MapStrategySection map={map} />
 
       {/* Other maps in the realm */}
       {siblings.length > 0 && (
