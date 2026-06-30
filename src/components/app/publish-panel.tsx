@@ -90,8 +90,8 @@ export function PublishPanel({ role, characterSlug, perkSlugs }: PublishPanelPro
     <div className="rounded-2xl glass-elevated p-6">
       <h3 className="font-display text-lg font-semibold text-ink">Publish your build</h3>
       <p className="mt-1 text-sm text-ink-3">
-        Give it a name and tell people why it works. Your {role} loadout and chosen
-        character travel with it.
+        Give it a title and a short description, then tell people why it works. Your{" "}
+        {role} loadout and chosen character travel with it.
       </p>
 
       <div className="mt-5 flex flex-col gap-4">
@@ -105,7 +105,7 @@ export function PublishPanel({ role, characterSlug, perkSlugs }: PublishPanelPro
           />
         </Field>
 
-        <Field label="Summary" hint={`${summary.length}/200`}>
+        <Field label="Description" hint={`${summary.length}/200`}>
           <input
             value={summary}
             onChange={(e) => setSummary(e.target.value)}

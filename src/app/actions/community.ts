@@ -47,7 +47,7 @@ export async function publishBuild(input: PublishInput): Promise<ActionResult> {
   if (title.length < 3 || title.length > 80)
     return { ok: false, error: "Title must be 3–80 characters." };
   if (summary.length < 10 || summary.length > 200)
-    return { ok: false, error: "Summary must be 10–200 characters." };
+    return { ok: false, error: "Description must be 10–200 characters." };
   if (whyItWorks.length > 600)
     return { ok: false, error: "“Why it works” must be 600 characters or fewer." };
   if (!ROLES.includes(input.role))
