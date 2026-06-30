@@ -7,6 +7,7 @@ import { Send, Trash2 } from "lucide-react";
 import { addComment, deleteComment } from "@/app/actions/community";
 import type { CommentWithAuthor } from "@/lib/community";
 import { AuthorChip } from "./author-chip";
+import { ReportButton } from "./report-button";
 import { Button } from "@/components/ui/button";
 
 interface CommentsSectionProps {
@@ -110,7 +111,7 @@ export function CommentsSection({
                 <AuthorChip name={c.authorName} image={c.authorImage} size="md" />
                 <span className="text-xs text-ink-3">{timeAgo(c.createdAt)}</span>
               </div>
-              {currentUserId === c.userId && (
+              {currentUserId === c.userId ? (
                 <button
                   type="button"
                   onClick={() => remove(c.id)}
@@ -120,6 +121,10 @@ export function CommentsSection({
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
+              ) : (
+                isAuthenticated && (
+                  <ReportButton targetType="comment" targetId={c.id} variant="icon" />
+                )
               )}
             </div>
             <p className="mt-2 whitespace-pre-wrap text-sm text-ink-2">{c.body}</p>

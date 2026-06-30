@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ShieldCheck, Users, LayoutGrid, MessageSquare, ArrowLeft } from "lucide-react";
+import { ShieldCheck, Users, LayoutGrid, MessageSquare, Flag, ArrowLeft } from "lucide-react";
 import { auth } from "@/auth";
 import { isStaff } from "@/lib/permissions";
 import { ROLE_LABEL } from "@/lib/permissions";
@@ -9,6 +9,7 @@ export const dynamic = "force-dynamic";
 
 const NAV = [
   { href: "/staff", label: "Dashboard", Icon: ShieldCheck, exact: true },
+  { href: "/staff/reports", label: "Reports", Icon: Flag },
   { href: "/staff/users", label: "Users", Icon: Users },
   { href: "/staff/builds", label: "Builds", Icon: LayoutGrid },
   { href: "/staff/comments", label: "Comments", Icon: MessageSquare },

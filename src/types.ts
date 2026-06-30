@@ -13,6 +13,12 @@ export type Role = (typeof ROLES)[number];
 export const STAFF_ROLES = ["user", "moderator", "admin", "owner"] as const;
 export type StaffRole = (typeof STAFF_ROLES)[number];
 
+// User reports against community content, for the staff queue.
+export const REPORT_TARGETS = ["build", "comment"] as const;
+export type ReportTarget = (typeof REPORT_TARGETS)[number];
+export const REPORT_STATUSES = ["open", "resolved", "dismissed"] as const;
+export type ReportStatus = (typeof REPORT_STATUSES)[number];
+
 // Perk gameplay categories — used to filter the knowledgebase.
 export const SURVIVOR_PERK_CATEGORIES = [
   "exhaustion",

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Users, LayoutGrid, MessageSquare, Star, Ban, ArrowRight } from "lucide-react";
+import { Users, LayoutGrid, MessageSquare, Star, Ban, Flag, ArrowRight } from "lucide-react";
 import { getStaffStats } from "@/lib/staff";
 
 export const metadata: Metadata = { title: "Staff — Dashboard" };
 
 export default async function StaffDashboard() {
-  let stats = { users: 0, builds: 0, comments: 0, ratings: 0, banned: 0 };
+  let stats = { users: 0, builds: 0, comments: 0, ratings: 0, banned: 0, openReports: 0 };
   try {
     stats = await getStaffStats();
   } catch {
@@ -14,6 +14,7 @@ export default async function StaffDashboard() {
   }
 
   const cards = [
+    { label: "Open reports", value: stats.openReports, Icon: Flag, href: "/staff/reports" },
     { label: "Users", value: stats.users, Icon: Users, href: "/staff/users" },
     { label: "Community builds", value: stats.builds, Icon: LayoutGrid, href: "/staff/builds" },
     { label: "Comments", value: stats.comments, Icon: MessageSquare, href: "/staff/comments" },
@@ -39,6 +40,7 @@ export default async function StaffDashboard() {
 
       <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
         {[
+          { href: "/staff/reports", title: "Review reports", body: "Work through what the community has flagged.", Icon: Flag },
           { href: "/staff/users", title: "Manage users", body: "Change roles, ban or unban, and remove accounts.", Icon: Users },
           { href: "/staff/builds", title: "Moderate builds", body: "Review and remove any community build.", Icon: LayoutGrid },
           { href: "/staff/comments", title: "Moderate comments", body: "Read the latest comments and delete anything off-limits.", Icon: MessageSquare },

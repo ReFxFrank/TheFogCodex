@@ -1,12 +1,12 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { db } from "@/db";
-import { users, communityBuilds, comments } from "@/db/schema";
+import { users, communityBuilds, comments, reports } from "@/db/schema";
 import { requireStaff } from "@/lib/staff";
 import { rankOf } from "@/lib/permissions";
-import { STAFF_ROLES, type StaffRole } from "@/types";
+import { STAFF_ROLES, type ReportTarget, type StaffRole } from "@/types";
 
 type Result = { ok: true } | { ok: false; error: string };
 
@@ -67,12 +67,28 @@ export async function setUserBanned(
   return { ok: true };
 }
 
+/** Mark any open reports against a target as resolved (used when it's deleted). */
+async function closeReportsFor(targetType: ReportTarget, targetId: string, actorId: string) {
+  await db
+    .update(reports)
+    .set({ status: "resolved", resolvedById: actorId, resolvedAt: new Date() })
+    .where(
+      and(
+        eq(reports.targetType, targetType),
+        eq(reports.targetId, targetId),
+        eq(reports.status, "open"),
+      ),
+    );
+}
+
 /** Delete any community build. Moderator+. */
 export async function deleteBuildAsStaff(buildId: string): Promise<Result> {
   const actor = await requireStaff("moderator");
   if (!actor) return { ok: false, error: "Staff access required." };
   await db.delete(communityBuilds).where(eq(communityBuilds.id, buildId));
+  await closeReportsFor("build", buildId, actor.id);
   revalidatePath("/staff/builds");
+  revalidatePath("/staff/reports");
   revalidatePath("/community");
   return { ok: true };
 }
@@ -82,7 +98,26 @@ export async function deleteCommentAsStaff(commentId: string): Promise<Result> {
   const actor = await requireStaff("moderator");
   if (!actor) return { ok: false, error: "Staff access required." };
   await db.delete(comments).where(eq(comments.id, commentId));
+  await closeReportsFor("comment", commentId, actor.id);
   revalidatePath("/staff/comments");
+  revalidatePath("/staff/reports");
+  return { ok: true };
+}
+
+/** Resolve or dismiss a report from the staff queue. Moderator+. */
+export async function resolveReport(
+  reportId: string,
+  status: "resolved" | "dismissed",
+): Promise<Result> {
+  const actor = await requireStaff("moderator");
+  if (!actor) return { ok: false, error: "Staff access required." };
+  if (status !== "resolved" && status !== "dismissed")
+    return { ok: false, error: "Invalid action." };
+  await db
+    .update(reports)
+    .set({ status, resolvedById: actor.id, resolvedAt: new Date() })
+    .where(eq(reports.id, reportId));
+  revalidatePath("/staff/reports");
   return { ok: true };
 }
 

@@ -4,10 +4,17 @@ import { revalidatePath } from "next/cache";
 import { and, eq } from "drizzle-orm";
 import { auth } from "@/auth";
 import { db } from "@/db";
-import { communityBuilds, comments, ratings } from "@/db/schema";
+import { communityBuilds, comments, ratings, reports } from "@/db/schema";
 import { perkBySlug, characterBySlug } from "@/data";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
-import { ROLES, DIFFICULTY, ARCHETYPES, type Role } from "@/types";
+import {
+  ROLES,
+  DIFFICULTY,
+  ARCHETYPES,
+  REPORT_TARGETS,
+  type Role,
+  type ReportTarget,
+} from "@/types";
 
 export interface PublishInput {
   title: string;
@@ -137,6 +144,33 @@ export async function addComment(
   });
 
   revalidatePath(`/community/${buildId}`);
+  return { ok: true };
+}
+
+/** Flag a build or comment for staff review. */
+export async function reportContent(
+  targetType: ReportTarget,
+  targetId: string,
+  reason: string,
+): Promise<ActionResult> {
+  const session = await auth();
+  if (!session?.user?.id) return { ok: false, error: "Sign in to report content." };
+  if (session.user.banned) return { ok: false, error: "Your account is suspended." };
+  if (!REPORT_TARGETS.includes(targetType)) return { ok: false, error: "Invalid report." };
+
+  const text = reason?.trim() ?? "";
+  if (text.length < 3) return { ok: false, error: "Add a short reason for the report." };
+  if (text.length > 500) return { ok: false, error: "That reason is too long (500 max)." };
+
+  if (!rateLimit(`report:${session.user.id}`, 20, 60 * 60_000))
+    return { ok: false, error: "You're reporting too fast. Try again later." };
+
+  // One report per user per target — re-reporting is a silent no-op.
+  await db
+    .insert(reports)
+    .values({ reporterId: session.user.id, targetType, targetId, reason: text })
+    .onConflictDoNothing();
+
   return { ok: true };
 }
 

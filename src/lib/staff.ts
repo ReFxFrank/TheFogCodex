@@ -1,10 +1,10 @@
 import "server-only";
-import { desc, eq, sql } from "drizzle-orm";
+import { desc, eq, inArray, sql } from "drizzle-orm";
 import { auth } from "@/auth";
 import { db } from "@/db";
-import { users, communityBuilds, comments, ratings } from "@/db/schema";
+import { users, communityBuilds, comments, ratings, reports } from "@/db/schema";
 import { atLeast } from "@/lib/permissions";
-import type { StaffRole } from "@/types";
+import type { ReportTarget, StaffRole } from "@/types";
 
 // ============================================================
 // Server-only staff/moderation reads + the access guard.
@@ -29,12 +29,13 @@ export async function requireStaff(
 }
 
 export async function getStaffStats() {
-  const [u, b, c, r, banned] = await Promise.all([
+  const [u, b, c, r, banned, openReports] = await Promise.all([
     db.select({ n: sql<string>`count(*)` }).from(users),
     db.select({ n: sql<string>`count(*)` }).from(communityBuilds),
     db.select({ n: sql<string>`count(*)` }).from(comments),
     db.select({ n: sql<string>`count(*)` }).from(ratings),
     db.select({ n: sql<string>`count(*)` }).from(users).where(eq(users.banned, true)),
+    db.select({ n: sql<string>`count(*)` }).from(reports).where(eq(reports.status, "open")),
   ]);
   return {
     users: Number(u[0]?.n ?? 0),
@@ -42,7 +43,81 @@ export async function getStaffStats() {
     comments: Number(c[0]?.n ?? 0),
     ratings: Number(r[0]?.n ?? 0),
     banned: Number(banned[0]?.n ?? 0),
+    openReports: Number(openReports[0]?.n ?? 0),
   };
+}
+
+export interface StaffReportRow {
+  id: string;
+  targetType: ReportTarget;
+  targetId: string;
+  reason: string;
+  reporterName: string | null;
+  createdAt: Date;
+  /** Build title or comment snippet, or a "(deleted …)" marker. */
+  targetLabel: string;
+  /** Build id to link the report to (null if the content is gone). */
+  buildId: string | null;
+  exists: boolean;
+}
+
+/** Open reports, newest first, enriched with the reported content's context. */
+export async function listReports(): Promise<StaffReportRow[]> {
+  const rows = await db
+    .select({
+      id: reports.id,
+      targetType: reports.targetType,
+      targetId: reports.targetId,
+      reason: reports.reason,
+      createdAt: reports.createdAt,
+      reporterName: users.name,
+    })
+    .from(reports)
+    .leftJoin(users, eq(reports.reporterId, users.id))
+    .where(eq(reports.status, "open"))
+    .orderBy(desc(reports.createdAt));
+
+  const buildIds = rows.filter((r) => r.targetType === "build").map((r) => r.targetId);
+  const commentIds = rows.filter((r) => r.targetType === "comment").map((r) => r.targetId);
+
+  const [buildRows, commentRows] = await Promise.all([
+    buildIds.length
+      ? db
+          .select({ id: communityBuilds.id, title: communityBuilds.title })
+          .from(communityBuilds)
+          .where(inArray(communityBuilds.id, buildIds))
+      : Promise.resolve([] as { id: string; title: string }[]),
+    commentIds.length
+      ? db
+          .select({ id: comments.id, body: comments.body, buildId: comments.buildId })
+          .from(comments)
+          .where(inArray(comments.id, commentIds))
+      : Promise.resolve([] as { id: string; body: string; buildId: string }[]),
+  ]);
+
+  const bMap = new Map(buildRows.map((b) => [b.id, b]));
+  const cMap = new Map(commentRows.map((c) => [c.id, c]));
+
+  return rows.map((r) => {
+    if (r.targetType === "build") {
+      const b = bMap.get(r.targetId);
+      return {
+        ...r,
+        targetType: "build" as ReportTarget,
+        targetLabel: b ? b.title : "(deleted build)",
+        buildId: b?.id ?? null,
+        exists: Boolean(b),
+      };
+    }
+    const c = cMap.get(r.targetId);
+    return {
+      ...r,
+      targetType: "comment" as ReportTarget,
+      targetLabel: c ? `“${c.body.slice(0, 100)}${c.body.length > 100 ? "…" : ""}”` : "(deleted comment)",
+      buildId: c?.buildId ?? null,
+      exists: Boolean(c),
+    };
+  });
 }
 
 export interface StaffUserRow {

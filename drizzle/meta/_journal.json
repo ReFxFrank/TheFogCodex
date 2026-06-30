@@ -15,6 +15,13 @@
       "when": 1782526851798,
       "tag": "0001_staff_and_passwords",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1782783410270,
+      "tag": "0002_yellow_pretty_boy",
+      "breakpoints": true
     }
   ]
 }

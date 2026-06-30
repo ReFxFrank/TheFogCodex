@@ -19,6 +19,7 @@ import { PerkSlot } from "@/components/app/perk-slot";
 import { RatingWidget } from "@/components/app/rating-widget";
 import { CommentsSection } from "@/components/app/comments-section";
 import { DeleteBuildButton } from "@/components/app/delete-build-button";
+import { ReportButton } from "@/components/app/report-button";
 
 export const dynamic = "force-dynamic";
 
@@ -94,7 +95,11 @@ export default async function CommunityBuildPage({
           <h1 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
             {b.title}
           </h1>
-          {isOwner && <DeleteBuildButton buildId={b.id} />}
+          {isOwner ? (
+            <DeleteBuildButton buildId={b.id} />
+          ) : (
+            currentUserId && <ReportButton targetType="build" targetId={b.id} />
+          )}
         </div>
         <p className="mt-2 max-w-2xl text-base text-ink-2">{b.summary}</p>
 

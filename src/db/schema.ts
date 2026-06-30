@@ -129,5 +129,32 @@ export const comments = pgTable("comment", {
   createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
 });
 
+// User-submitted reports against a build or comment, for the staff queue.
+// targetId is polymorphic (a build or comment id) so it has no FK; the queue
+// joins it back and shows "(deleted)" if the content is already gone.
+export const reports = pgTable(
+  "report",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    reporterId: text("reporterId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    targetType: text("targetType").notNull(), // "build" | "comment"
+    targetId: text("targetId").notNull(),
+    reason: text("reason").notNull(),
+    status: text("status").notNull().default("open"), // "open" | "resolved" | "dismissed"
+    resolvedById: text("resolvedById").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    resolvedAt: timestamp("resolvedAt", { mode: "date" }),
+    createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
+  },
+  // One report per user per piece of content.
+  (t) => [unique("report_reporter_target_unique").on(t.reporterId, t.targetType, t.targetId)],
+);
+
 export type CommunityBuildRow = typeof communityBuilds.$inferSelect;
 export type CommentRow = typeof comments.$inferSelect;
+export type ReportRow = typeof reports.$inferSelect;
