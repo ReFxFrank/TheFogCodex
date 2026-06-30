@@ -56,22 +56,13 @@ export function SiteFooter() {
             <Link href="/about" className="text-ink-2 transition-colors hover:text-ink">
               About
             </Link>
-            <Link href="/guidelines" className="text-ink-2 transition-colors hover:text-ink">
-              Guidelines
-            </Link>
-            <Link href="/privacy" className="text-ink-2 transition-colors hover:text-ink">
-              Privacy
-            </Link>
-            <Link href="/terms" className="text-ink-2 transition-colors hover:text-ink">
-              Terms
-            </Link>
           </nav>
         </div>
 
         <hr className="rule-glow my-8" />
 
-        <div className="flex flex-col gap-3 text-xs text-ink-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="max-w-2xl leading-relaxed">
+        <div className="flex flex-col gap-5 text-xs text-ink-3">
+          <p className="max-w-3xl leading-relaxed">
             <strong className="font-semibold text-ink-2">Unofficial fan-made resource.</strong>{" "}
             Not affiliated with or endorsed by Behaviour Interactive. Dead by
             Daylight and all related characters, perks, and marks are the
@@ -82,9 +73,29 @@ export function SiteFooter() {
             </Link>{" "}
             for data sources.
           </p>
-          <div className="flex shrink-0 items-center gap-3">
-            <EffectsToggle />
-            <span>Patch {ROSTER_STATS.patch}</span>
+
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <nav className="flex flex-wrap items-center gap-x-4 gap-y-1">
+              <Link href="/privacy" className="transition-colors hover:text-ink-2">
+                Privacy
+              </Link>
+              <span className="text-white/15" aria-hidden>
+                ·
+              </span>
+              <Link href="/terms" className="transition-colors hover:text-ink-2">
+                Terms
+              </Link>
+              <span className="text-white/15" aria-hidden>
+                ·
+              </span>
+              <Link href="/guidelines" className="transition-colors hover:text-ink-2">
+                Guidelines
+              </Link>
+            </nav>
+            <div className="flex shrink-0 items-center gap-3">
+              <EffectsToggle />
+              <span>Patch {ROSTER_STATS.patch}</span>
+            </div>
           </div>
         </div>
       </div>
