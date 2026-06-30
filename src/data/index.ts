@@ -1,6 +1,7 @@
 import type {
   Build,
   Character,
+  GameMap,
   Perk,
   Role,
   SearchDoc,
@@ -8,6 +9,7 @@ import type {
 import { PERKS } from "./perks";
 import { CHARACTERS } from "./characters";
 import { BUILDS } from "./builds";
+import { MAPS } from "./maps";
 
 export { getMetaNote, META_NOTES } from "./meta-notes";
 export { ADDONS } from "./addons";
@@ -27,6 +29,7 @@ export { OFFERINGS } from "./offerings";
 export const perks: readonly Perk[] = PERKS;
 export const characters: readonly Character[] = CHARACTERS;
 export const builds: readonly Build[] = BUILDS;
+export const maps: readonly GameMap[] = MAPS;
 
 // ---- Slug -> entity maps ----------------------------------------------------
 export const perkBySlug = new Map<string, Perk>(PERKS.map((p) => [p.slug, p]));
@@ -35,6 +38,9 @@ export const characterBySlug = new Map<string, Character>(
 );
 export const buildBySlug = new Map<string, Build>(
   BUILDS.map((b) => [b.slug, b]),
+);
+export const mapBySlug = new Map<string, GameMap>(
+  MAPS.map((m) => [m.slug, m]),
 );
 
 // ---- Reverse indexes (the graph) --------------------------------------------
@@ -82,6 +88,12 @@ export function getCharacter(slug: string): Character | undefined {
 export function getBuild(slug: string): Build | undefined {
   return buildBySlug.get(slug);
 }
+export function getMap(slug: string): GameMap | undefined {
+  return mapBySlug.get(slug);
+}
+export function getMapsInRealm(realm: string): GameMap[] {
+  return MAPS.filter((m) => m.realm === realm);
+}
 export function getBuildsUsingPerk(slug: string): Build[] {
   return buildsByPerk.get(slug) ?? [];
 }
@@ -128,6 +140,7 @@ export const ROSTER_STATS = {
   cataloguedBuilds: BUILDS.length,
   cataloguedPerks: PERKS.length,
   cataloguedCharacters: CHARACTERS.length,
+  cataloguedMaps: MAPS.length,
   patch: "10.0.1",
 } as const;
 
@@ -198,6 +211,25 @@ export const searchDocs: SearchDoc[] = [
       c.role,
       c.blurb,
       c.archetypeTags.join(" "),
+    ].join(" "),
+  })),
+  ...MAPS.map<SearchDoc>((m) => ({
+    id: `map:${m.slug}`,
+    kind: "map",
+    slug: m.slug,
+    title: m.name,
+    subtitle: `Map · ${m.realm}`,
+    // Tint the palette result by which side the map favours.
+    role: m.lean === "killer" ? "killer" : "survivor",
+    href: `/maps/${m.slug}`,
+    keywords: [
+      m.name,
+      m.realm,
+      m.setting,
+      m.size,
+      m.lean,
+      m.tags.join(" "),
+      m.summary,
     ].join(" "),
   })),
 ];

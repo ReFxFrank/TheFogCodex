@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { Command } from "cmdk";
 import {
   LayoutGrid,
+  Map as MapIcon,
   Shield,
   Skull,
   Sparkles,
@@ -41,6 +42,7 @@ const KIND_META: Record<SearchKind, { label: string; Icon: typeof User }> = {
   build: { label: "Builds", Icon: LayoutGrid },
   perk: { label: "Perks", Icon: Sparkles },
   character: { label: "Characters", Icon: User },
+  map: { label: "Maps", Icon: MapIcon },
 };
 
 export function CommandPaletteProvider({ children }: { children: React.ReactNode }) {
@@ -65,7 +67,7 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
 
   const results = useMemo(() => searchAll(query), [query]);
   const grouped = useMemo(() => {
-    const g: Record<SearchKind, typeof results> = { build: [], perk: [], character: [] };
+    const g: Record<SearchKind, typeof results> = { build: [], perk: [], character: [], map: [] };
     for (const r of results) g[r.kind].push(r);
     return g;
   }, [results]);
@@ -174,7 +176,7 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
                 </Command.Group>
               )}
 
-              {(["build", "perk", "character"] as SearchKind[]).map((kind) => {
+              {(["build", "perk", "character", "map"] as SearchKind[]).map((kind) => {
                 const items = grouped[kind];
                 if (items.length === 0) return null;
                 const { label, Icon } = KIND_META[kind];

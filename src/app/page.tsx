@@ -33,7 +33,8 @@ export default function Home() {
         <p className="text-sm text-ink-3">
           {ROSTER_STATS.totalKillers} Killers · {ROSTER_STATS.totalSurvivors} Survivors ·{" "}
           <span className="text-ink-2">{ROSTER_STATS.cataloguedBuilds}</span> builds ·{" "}
-          <span className="text-ink-2">{ROSTER_STATS.cataloguedPerks}</span> perks catalogued
+          <span className="text-ink-2">{ROSTER_STATS.cataloguedPerks}</span> perks ·{" "}
+          <span className="text-ink-2">{ROSTER_STATS.cataloguedMaps}</span> maps catalogued
         </p>
       </section>
 

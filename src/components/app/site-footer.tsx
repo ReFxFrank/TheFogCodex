@@ -32,6 +32,9 @@ export function SiteFooter() {
             <Link href="/characters" className="text-ink-2 transition-colors hover:text-ink">
               Characters
             </Link>
+            <Link href="/maps" className="text-ink-2 transition-colors hover:text-ink">
+              Maps
+            </Link>
             <Link href="/community" className="text-ink-2 transition-colors hover:text-ink">
               Community
             </Link>

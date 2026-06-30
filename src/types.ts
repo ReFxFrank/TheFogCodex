@@ -80,6 +80,18 @@ export type Difficulty = (typeof DIFFICULTY)[number];
 export const META_TIER = ["S", "A", "B", "C", "off-meta"] as const;
 export type MetaTier = (typeof META_TIER)[number];
 
+// ---- Maps -------------------------------------------------------------------
+export const MAP_SETTINGS = ["outdoor", "indoor", "mixed"] as const;
+export type MapSetting = (typeof MAP_SETTINGS)[number];
+
+export const MAP_SIZES = ["small", "medium", "large"] as const;
+export type MapSize = (typeof MAP_SIZES)[number];
+
+// Which side a map tends to favour. A rough community read that shifts with
+// reworks and the current meta — not an official stat.
+export const MAP_LEANS = ["killer", "balanced", "survivor"] as const;
+export type MapLean = (typeof MAP_LEANS)[number];
+
 export interface Character {
   slug: string;
   name: string; // e.g. "The Blight"
@@ -130,9 +142,23 @@ export interface Build {
   featured?: boolean;
 }
 
+export interface GameMap {
+  slug: string;
+  name: string; // e.g. "Ironworks of Misery"
+  realm: string; // e.g. "MacMillan Estate"
+  setting: MapSetting;
+  size: MapSize;
+  lean: MapLean; // community estimate; shifts with reworks
+  licensed?: boolean; // licensed realm (Silent Hill, Resident Evil, …)
+  tags: string[]; // defining features: "strong-main-building", "low-visibility", "open", …
+  summary: string; // one-liner for cards
+  notes: string; // honest paragraph: layout + what to know
+  image?: string; // /images/maps/<slug>.jpg (drop-in; placeholder otherwise)
+}
+
 // ---- Search index entry (built at load time) --------------------------------
 
-export type SearchKind = "build" | "perk" | "character";
+export type SearchKind = "build" | "perk" | "character" | "map";
 
 export interface SearchDoc {
   id: string; // `${kind}:${slug}`
