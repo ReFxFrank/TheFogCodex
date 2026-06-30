@@ -1,7 +1,7 @@
 import Image from "next/image";
 import type { PerkCategory, Role } from "@/types";
 import { hueFromString } from "@/lib/placeholders";
-import { glyphForCategories } from "@/lib/perk-glyph";
+import { glyphForPerk } from "@/lib/perk-glyph";
 import { PERK_ART } from "@/data/art-manifest";
 import { cn } from "@/lib/utils";
 
@@ -47,7 +47,7 @@ export function PerkIcon({
   const b = `hsl(${(hue + accent) / 2}, 38%, 30%)`;
   // Bright, legible tint for the glyph itself (lighter than the frame accent).
   const glyphColor = `hsl(${accent}, ${role === "killer" ? 75 : 60}%, 80%)`;
-  const Glyph = glyphForCategories(categories, role);
+  const Glyph = glyphForPerk(slug, categories, role);
 
   return (
     <div className={cn("relative h-full w-full", className)} aria-hidden>
